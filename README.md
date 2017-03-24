@@ -1,2 +1,3 @@
 # php-logging-api
-Implements solutions of logging in PHP applications
+
+Implements basic solutions of logging in PHP applications
