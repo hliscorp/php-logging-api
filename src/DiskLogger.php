@@ -9,7 +9,7 @@ abstract class DiskLogger extends Logger {
 	 * @see Logger::getErrorInfo()
 	 */
 	protected function getErrorInfo(Exception $exception) {
-		return get_class($exception)."\t".$exception->getFile()."\t".$exception->getLine()."\t".$exception->getMessage();
+		return $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\t".get_class($exception)."\t".$exception->getFile()."\t".$exception->getLine()."\t".$exception->getMessage();
 	}
 	
 	/**
@@ -18,6 +18,6 @@ abstract class DiskLogger extends Logger {
 	 */
 	protected function getMessageInfo($message) {
 		$trace = debug_backtrace()[1];
-		return $trace["file"]."\t".$trace["line"]."\t".$message;
+		return $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\t".$trace["file"]."\t".$trace["line"]."\t".$message;
 	}
 }
