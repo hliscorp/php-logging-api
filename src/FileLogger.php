@@ -4,7 +4,7 @@ require_once("DiskLogger.php");
 /**
  * Logs messages/errors into simple files.
  */
-class FileLogger extends Logger {
+class FileLogger extends DiskLogger {
 	const EXTENSION = "log";
 	private $filePath;
 	private $rotationPattern;
