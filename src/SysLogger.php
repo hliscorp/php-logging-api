@@ -2,7 +2,7 @@
 /**
  * Logs messages/errors into syslog service.
  */
-class SysLogger extends Logger {
+class SysLogger extends DiskLogger {
 	private $applicationName;
 	
 	/**
