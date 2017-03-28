@@ -1,10 +1,10 @@
 <?php
-require_once("DiskLogger.php");
+require_once("Logger.php");
 
 /**
  * Logs messages/errors into simple files.
  */
-class FileLogger extends DiskLogger {
+class FileLogger extends Logger {
 	const EXTENSION = "log";
 	private $filePath;
 	private $rotationPattern;
@@ -19,12 +19,28 @@ class FileLogger extends DiskLogger {
 		$this->filePath = $filePath;
 		$this->rotationPattern = $rotationPattern;
 	}
+	/**
+	 * {@inheritDoc}
+	 * @see Logger::getErrorInfo()
+	 */
+	protected function getErrorInfo(Exception $exception) {
+		return get_class($exception)."\t".$exception->getFile()."\t".$exception->getLine()."\t".$exception->getMessage();
+	}
+	
+	/**
+	 * {@inheritDoc}
+	 * @see Logger::getMessageInfo()
+	 */
+	protected function getMessageInfo($message) {
+		$trace = debug_backtrace()[1];
+		return $trace["file"]."\t".$trace["line"]."\t".$message;
+	}
 	
 	/**
 	 * {@inheritDoc}
 	 * @see DiskLogger::save()
 	 */
 	protected function log($message, $level) {
-		error_log(date("Y-m-d H:i:s")."\t".$level."\t".$message."\n", 3, $this->filePath.($this->rotationPattern?"__".date($this->rotationPattern):"").".".self::EXTENSION);
+		error_log(date("Y-m-d H:i:s")."\t".$level."\t".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\t".$message."\n", 3, $this->filePath.($this->rotationPattern?"__".date($this->rotationPattern):"").".".self::EXTENSION);
 	}
 }
