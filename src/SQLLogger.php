@@ -1,4 +1,6 @@
 <?php
+require_once("Logger.php");
+
 /**
  * Logs messages/errors into SQL database. Requires a table with this structure (example @ MySQL):
  * 
