@@ -37,7 +37,7 @@ class SysLogger extends Logger {
 	 */
 	protected function log($message, $logLevel) {
 		openlog($this->applicationName, LOG_NDELAY, LOG_USER);
-		syslog($logLevel, $_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']." ".$message);
+		syslog($logLevel, $_SERVER['REQUEST_URI']." ".$message);
 		closelog();
 	}
 }

@@ -56,7 +56,7 @@ class SQLLogger extends Logger {
 	/**
 	 * Gets environment of logging.
 	 * 
-	 * @return LoggingEnvironment
+	 * @return array
 	 */
 	private function getEnvironmentInfo() {
 		$environment = array();
@@ -90,7 +90,7 @@ class SQLLogger extends Logger {
 	protected function getErrorInfo(Exception $exception){
 		// return an array
 		return array(
-			":url"=>$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'],
+			":url"=>$_SERVER['REQUEST_URI'],
 			":type"=>get_class($exception),
 			":file"=>$exception->getFile(),
 			":line"=>$exception->getLine(),
@@ -110,7 +110,7 @@ class SQLLogger extends Logger {
 		unset($trace[0]);
 		
 		return array(
-			":url"=>$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI'],
+			":url"=>$_SERVER['REQUEST_URI'],
 			":type"=>self::LOGGING_TYPE,
 			":file"=>$trace[1]["file"],
 			":line"=>$trace[1]["line"],
@@ -127,7 +127,7 @@ class SQLLogger extends Logger {
 	protected function log($info, $level) {
 		try {
 			$info[":level"] = $level;
-			$info[":uid"] = md5($info[":type"]."#".$info[":file"]."#".$info[":line"].$info[":message"]);
+			$info[":uid"] = md5($info[":url"]."#".$info[":type"]."#".$info[":file"]."#".$info[":line"].$info[":message"]);
 			$this->statement->execute($info);
 		} catch(Exception $e) {}
 	}
