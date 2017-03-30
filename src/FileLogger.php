@@ -41,6 +41,6 @@ class FileLogger extends Logger {
 	 * @see DiskLogger::save()
 	 */
 	protected function log($message, $level) {
-		error_log(date("Y-m-d H:i:s")."\t".$level."\t".$_SERVER['HTTP_HOST'].$_SERVER['REQUEST_URI']."\t".$message."\n", 3, $this->filePath.($this->rotationPattern?"__".date($this->rotationPattern):"").".".self::EXTENSION);
+		error_log(date("Y-m-d H:i:s")."\t".$level."\t".$_SERVER['REQUEST_URI']."\t".$message."\n", 3, $this->filePath.($this->rotationPattern?"__".date($this->rotationPattern):"").".".self::EXTENSION);
 	}
 }
