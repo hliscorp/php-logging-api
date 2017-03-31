@@ -78,6 +78,7 @@ class SQLLogger extends Logger {
 	private function stripTrace($trace) {
 		$output = array();
 		foreach($trace as $item) {
+			if(empty($item['file'])) continue; // for fatal errors there is no trace
 			$output[]=array("file"=>$item["file"],"line"=>$item["line"]);
 		}
 		return $output;
