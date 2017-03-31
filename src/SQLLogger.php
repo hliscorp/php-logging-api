@@ -88,7 +88,7 @@ class SQLLogger extends Logger {
 	 * {@inheritDoc}
 	 * @see Logger::getErrorInfo()
 	 */
-	protected function getErrorInfo(Exception $exception){
+	protected function getErrorInfo($exception){
 		// return an array
 		return array(
 			":url"=>$_SERVER['REQUEST_URI'],

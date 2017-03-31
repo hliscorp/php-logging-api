@@ -18,7 +18,7 @@ class SysLogger extends Logger {
 	 * {@inheritDoc}
 	 * @see Logger::getErrorInfo()
 	 */
-	protected function getErrorInfo(Exception $exception) {
+	protected function getErrorInfo($exception) {
 		return get_class($exception)." ".$exception->getFile()." ".$exception->getLine()." ".$exception->getMessage();
 	}
 	

@@ -23,7 +23,7 @@ class FileLogger extends Logger {
 	 * {@inheritDoc}
 	 * @see Logger::getErrorInfo()
 	 */
-	protected function getErrorInfo(Exception $exception) {
+	protected function getErrorInfo($exception) {
 		return get_class($exception)."\t".$exception->getFile()."\t".$exception->getLine()."\t".$exception->getMessage();
 	}
 	

@@ -6,44 +6,44 @@ abstract class Logger {
 	/**
 	 * Called when system encounters an error likely to make all sessions abort.
 	 * 
-	 * @param Exception $e
+	 * @param Exception|Throwable $exception
 	 */
-	public function emergency(Exception $e) {
-		$this->log($this->getErrorInfo($e), LOG_EMERG);
+	public function emergency($exception) {
+		$this->log($this->getErrorInfo($exception), LOG_EMERG);
 	}
 	
 	/**
 	 * Called when system encounters an error that caused current session to abort and requires immediate intervention.
 	 * 
-	 * @param Exception $e
+	 * @param Exception|Throwable $exception
 	 */
-	public function alert(Exception $e) {
-		$this->log($this->getErrorInfo($e), LOG_ALERT);
+	public function alert($exception) {
+		$this->log($this->getErrorInfo($exception), LOG_ALERT);
 	}
 	
 	/**
 	 * Called when system encounters an error that caused current session to abort.
 	 * 
-	 * @param Exception $e
+	 * @param Exception|Throwable $exception
 	 */
-	public function critical(Exception $e) {
-		$this->log($this->getErrorInfo($e), LOG_CRIT);
+	public function critical($exception) {
+		$this->log($this->getErrorInfo($exception), LOG_CRIT);
 	}
 
 	/**
 	 * Called when system encounters an error that caused a block of code to malfunction.
 	 *
-	 * @param Exception $e
+	 * @param Exception|Throwable $exception
 	 */
-	public function error(Exception $e) {
-		$message = $this->getErrorInfo($e);
+	public function error($exception) {
+		$message = $this->getErrorInfo($exception);
 		$this->log($message, LOG_ERR);
 	}
 
 	/**
 	 * Called when system encounters a situation likely to cause errors in the future.
 	 *
-	 * @param Exception $e
+	 * @param Exception|Throwable $e
 	 */
 	public function warning($message) {
 		$this->log($this->getMessageInfo($message), LOG_WARNING);
@@ -52,7 +52,7 @@ abstract class Logger {
 	/**
 	 * Called when system encounters a situation of some concern.
 	 *
-	 * @param Exception $e
+	 * @param Exception|Throwable $e
 	 */
 	public function notice($message) {
 		$this->log($this->getMessageInfo($message), LOG_NOTICE);
@@ -79,10 +79,10 @@ abstract class Logger {
 	/**
 	 * Aggregates information to log based on an exception.
 	 *  
-	 * @param Exception $exception
+	 * @param Exception|Throwable $exception
 	 * @return mixed
 	 */
-	abstract protected function getErrorInfo(Exception $exception);
+	abstract protected function getErrorInfo($exception);
 	
 	/**
 	 * Aggregates information to log based on a string message.
