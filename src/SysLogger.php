@@ -1,43 +1,31 @@
 <?php
 require_once("Logger.php");
+require_once("LogFormatter.php");
+
 /**
  * Logs messages/errors into syslog service.
  */
 class SysLogger extends Logger {
 	private $applicationName;
+	private $formatter;
 	
 	/**
 	 * Creates a logger instance.
 	 * @param string $applicationName Name of your application to appear in log lines.
+	 * @param LogFormatter $formatter Class responsible in creating and formatting logging message.
 	 */
-	public function __construct($applicationName) {
+	public function __construct($applicationName, LogFormatter $formatter) {
 		$this->applicationName = $applicationName;
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 * @see Logger::getErrorInfo()
-	 */
-	protected function getErrorInfo($exception) {
-		return get_class($exception)." ".$exception->getFile()." ".$exception->getLine()." ".$exception->getMessage();
-	}
-	
-	/**
-	 * {@inheritDoc}
-	 * @see Logger::getMessageInfo()
-	 */
-	protected function getMessageInfo($message) {
-		$trace = debug_backtrace()[1];
-		return $trace["file"]." ".$trace["line"]." ".$message;
+		$this->formatter = $formatter;
 	}
 	
 	/**
 	 * {@inheritDoc}
 	 * @see Logger::log()
 	 */
-	protected function log($message, $logLevel) {
+	protected function log($info, $level) {
 		openlog($this->applicationName, LOG_NDELAY, LOG_USER);
-		syslog($logLevel, $_SERVER['REQUEST_URI']." ".$message);
+		syslog($level, $this->formatter->format($info, $level));
 		closelog();
 	}
 }
