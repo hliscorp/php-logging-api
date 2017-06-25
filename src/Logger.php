@@ -9,7 +9,7 @@ abstract class Logger {
 	 * @param Exception|Throwable $exception
 	 */
 	public function emergency($exception) {
-		$this->log($this->getErrorInfo($exception), LOG_EMERG);
+		$this->log($exception, LOG_EMERG);
 	}
 	
 	/**
@@ -18,7 +18,7 @@ abstract class Logger {
 	 * @param Exception|Throwable $exception
 	 */
 	public function alert($exception) {
-		$this->log($this->getErrorInfo($exception), LOG_ALERT);
+		$this->log($exception, LOG_ALERT);
 	}
 	
 	/**
@@ -27,7 +27,7 @@ abstract class Logger {
 	 * @param Exception|Throwable $exception
 	 */
 	public function critical($exception) {
-		$this->log($this->getErrorInfo($exception), LOG_CRIT);
+		$this->log($exception, LOG_CRIT);
 	}
 
 	/**
@@ -36,8 +36,7 @@ abstract class Logger {
 	 * @param Exception|Throwable $exception
 	 */
 	public function error($exception) {
-		$message = $this->getErrorInfo($exception);
-		$this->log($message, LOG_ERR);
+		$this->log($exception, LOG_ERR);
 	}
 
 	/**
@@ -46,7 +45,7 @@ abstract class Logger {
 	 * @param Exception|Throwable $e
 	 */
 	public function warning($message) {
-		$this->log($this->getMessageInfo($message), LOG_WARNING);
+		$this->log($message, LOG_WARNING);
 	}
 	
 	/**
@@ -55,7 +54,7 @@ abstract class Logger {
 	 * @param Exception|Throwable $e
 	 */
 	public function notice($message) {
-		$this->log($this->getMessageInfo($message), LOG_NOTICE);
+		$this->log($message, LOG_NOTICE);
 	}
 	
 	/**
@@ -64,7 +63,7 @@ abstract class Logger {
 	 * @param string $message
 	 */
 	public function debug($message) {
-		$this->log($this->getMessageInfo($message), LOG_DEBUG);
+		$this->log($message, LOG_DEBUG);
 	}
 	
 	/**
@@ -73,30 +72,14 @@ abstract class Logger {
 	 * @param string $message
 	 */
 	public function info($message) {
-		$this->log($this->getMessageInfo($message), LOG_INFO);
+		$this->log($message, LOG_INFO);
 	}
-	
-	/**
-	 * Aggregates information to log based on an exception.
-	 *  
-	 * @param Exception|Throwable $exception
-	 * @return mixed
-	 */
-	abstract protected function getErrorInfo($exception);
-	
-	/**
-	 * Aggregates information to log based on a string message.
-	 * 
-	 * @param string $message
-	 * @return mixed
-	 */
-	abstract protected function getMessageInfo($message);
 	
 	
 	/**
 	 * Performs the act of logging.
 	 * 
-	 * @param mixed $info Information that needs being logged
+	 * @param string|Exception|Throwable $info Information that needs being logged
 	 * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424) 
 	 */
 	abstract protected function log($info, $level);
