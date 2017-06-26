@@ -1,6 +1,6 @@
 <?php
 /**
- * Class responsible in formatting log message for text-based loggers (eg: syslog or file).
+ * Class responsible in formatting log message for text-based loggers (eg: syslog or file) based on a pattern-match concept.
  */
 class LogFormatter {
 	private $pattern;
@@ -15,7 +15,7 @@ class LogFormatter {
 	}
 	
 	/**
-	 * Builds log message based on global pattern and supplied info to be logged & severity level.
+	 * Builds log message based on global pattern and info to be logged.
 	 * 
 	 * @param string|Exception|Throwable $info Information that needs being logged
 	 * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424) 
@@ -23,8 +23,8 @@ class LogFormatter {
 	 */
 	public function format($info, $level) {
 		$message = $this->pattern;
-		$message = str_replace("%d",date("Y-m-d H:i:s"));
-		$message = str_replace("%v", $level);
+		$message = str_replace("%d",date("Y-m-d H:i:s"), $message);
+		$message = str_replace("%v", $level, $message);
 		if($info instanceof Exception || $info instanceof Throwable) {
 			$message = str_replace("%e",  get_class($info), $message);
 			$message = str_replace("%f",  $info->getFile(), $message);
@@ -37,7 +37,7 @@ class LogFormatter {
 			$message = str_replace("%m",  $info, $message);
 		}
 		if(!empty($_SERVER['REQUEST_URI'])) {
-			$message = str_replace("%u", $_SERVER['REQUEST_URI']);
+			$message = str_replace("%u", $_SERVER['REQUEST_URI'], $message);
 		}		
 		return $message;
 	}
