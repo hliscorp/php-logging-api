@@ -19,7 +19,7 @@ class FileLogger extends Logger {
 	 * @param string $rotationPattern PHP date function format by which logs will rotate.
 	 * @param LogFormatter $formatter Class responsible in creating and formatting logging message.
 	 */
-	public function __construct($filePath, $rotationPattern="Y_m_d", LogFormatter $formatter) {
+	public function __construct($filePath, $rotationPattern="", LogFormatter $formatter) {
 		$this->filePath = $filePath;
 		$this->rotationPattern = $rotationPattern;
 		$this->formatter = $formatter;
