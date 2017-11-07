@@ -1,0 +1,15 @@
+{
+    "name": "lucinda/logging",
+    "type": "library",
+    "description": "Light weight logging API built with performance in mind",
+    "keywords": ["logging","loggers"],
+    "homepage": "http://www.lucinda-framework.com/logging-api",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lucian Popescu",
+            "email": "lucian.gabriel.popescu@gmail.com",
+            "role": "Developer"
+        }
+    ]
+}
