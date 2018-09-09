@@ -1,4 +1,5 @@
 <?php
+namespace Lucinda\Logging;
 /**
  * Class responsible in formatting log message for text-based loggers (eg: syslog or file) based on a pattern-match concept.
  */

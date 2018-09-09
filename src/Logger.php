@@ -1,4 +1,5 @@
 <?php
+namespace Lucinda\Logging;
 /**
  * Defines logging blueprints.
  */
