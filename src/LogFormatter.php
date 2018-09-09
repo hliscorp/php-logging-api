@@ -18,7 +18,7 @@ class LogFormatter {
 	/**
 	 * Builds log message based on global pattern and info to be logged.
 	 * 
-	 * @param string|Exception|Throwable $info Information that needs being logged
+	 * @param string|\Exception|\Throwable $info Information that needs being logged
 	 * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424) 
 	 * @return string Compiled log message ready to be saved.
 	 */
@@ -26,7 +26,7 @@ class LogFormatter {
 		$message = $this->pattern;
 		$message = str_replace("%d",date("Y-m-d H:i:s"), $message);
 		$message = str_replace("%v", $level, $message);
-		if($info instanceof Exception || $info instanceof Throwable) {
+		if($info instanceof \Exception || $info instanceof \Throwable) {
 			$message = str_replace("%e",  get_class($info), $message);
 			$message = str_replace("%f",  $info->getFile(), $message);
 			$message = str_replace("%l",  $info->getLine(), $message);
