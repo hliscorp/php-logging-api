@@ -43,7 +43,7 @@ abstract class Logger {
 	/**
 	 * Called when system encounters a situation likely to cause errors in the future.
 	 *
-	 * @param \Exception|\Throwable $e
+	 * @param string $message
 	 */
 	public function warning($message) {
 		$this->log($message, LOG_WARNING);
@@ -52,7 +52,7 @@ abstract class Logger {
 	/**
 	 * Called when system encounters a situation of some concern.
 	 *
-	 * @param \Exception|\Throwable $e
+	 * @param string $message
 	 */
 	public function notice($message) {
 		$this->log($message, LOG_NOTICE);

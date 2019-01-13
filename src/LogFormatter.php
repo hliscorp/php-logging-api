@@ -1,7 +1,14 @@
 <?php
 namespace Lucinda\Logging;
 /**
- * Class responsible in formatting log message for text-based loggers (eg: syslog or file) based on a pattern-match concept.
+ * Formats log message for text-based loggers (eg: syslog or file) based on a combination of following placeholders:
+ * - %d: timestamp message has occurred
+ * - %v: syslog priority level
+ * - %e: thrown exception class
+ * - %f: thrown exception file
+ * - %l: thrown exception line
+ * - %m: thrown exception message
+ * - %u: uri in which message has occurred
  */
 class LogFormatter {
 	private $pattern;
