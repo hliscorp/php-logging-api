@@ -7,7 +7,7 @@ abstract class Logger {
 	/**
 	 * Called when system encounters an error likely to make all sessions abort.
 	 * 
-	 * @param \Exception|\Throwable $exception
+	 * @param \Exception $exception
 	 */
 	public function emergency($exception) {
 		$this->log($exception, LOG_EMERG);
@@ -16,7 +16,7 @@ abstract class Logger {
 	/**
 	 * Called when system encounters an error that caused current session to abort and requires immediate intervention.
 	 * 
-	 * @param \Exception|\Throwable $exception
+	 * @param \Exception $exception
 	 */
 	public function alert($exception) {
 		$this->log($exception, LOG_ALERT);
@@ -25,7 +25,7 @@ abstract class Logger {
 	/**
 	 * Called when system encounters an error that caused current session to abort.
 	 * 
-	 * @param \Exception|\Throwable $exception
+	 * @param \Exception $exception
 	 */
 	public function critical($exception) {
 		$this->log($exception, LOG_CRIT);
@@ -34,7 +34,7 @@ abstract class Logger {
 	/**
 	 * Called when system encounters an error that caused a block of code to malfunction.
 	 *
-	 * @param \Exception|\Throwable $exception
+	 * @param \Exception $exception
 	 */
 	public function error($exception) {
 		$this->log($exception, LOG_ERR);
@@ -80,7 +80,7 @@ abstract class Logger {
 	/**
 	 * Performs the act of logging.
 	 * 
-	 * @param string|\Exception|\Throwable $info Information that needs being logged
+	 * @param mixed $info Information that needs being logged
 	 * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424) 
 	 */
 	abstract protected function log($info, $level);
