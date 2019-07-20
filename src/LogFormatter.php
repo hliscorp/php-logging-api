@@ -46,7 +46,13 @@ class LogFormatter {
 		}
 		if(!empty($_SERVER['REQUEST_URI'])) {
 			$message = str_replace("%u", $_SERVER['REQUEST_URI'], $message);
-		}		
+		}
+		if(!empty($_SERVER['REMOTE_ADDR'])) {
+		    $message = str_replace("%i", $_SERVER['REMOTE_ADDR'], $message);
+		}
+		if(!empty($_SERVER['HTTP_USER_AGENT'])) {
+		    $message = str_replace("%a", $_SERVER['HTTP_USER_AGENT'], $message);
+		}	
 		return $message;
 	}
 }
