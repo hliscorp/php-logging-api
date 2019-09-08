@@ -43,10 +43,15 @@ class LogFormatter
             $message = str_replace("%l", $info->getLine(), $message);
             $message = str_replace("%m", $info->getMessage(), $message);
         } else {
-            $trace = debug_backtrace()[2];
-            $message = str_replace("%f", $trace["file"], $message);
-            $message = str_replace("%l", $trace["line"], $message);
-            $message = str_replace("%m", $info, $message);
+            $trace = debug_backtrace();
+            foreach ($trace as $i=>$line) {
+                if ($line["class"]=="Lucinda\Logging\Logger") {
+                    $message = str_replace("%f", $line["file"], $message);
+                    $message = str_replace("%l", $line["line"], $message);
+                    $message = str_replace("%m", $info, $message);
+                    break;
+                }
+            }
         }
         if (!empty($_SERVER['REQUEST_URI'])) {
             $message = str_replace("%u", $_SERVER['REQUEST_URI'], $message);
