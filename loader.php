@@ -1,3 +1,3 @@
 <?php
-require_once("src/Logger.php");
-require_once("src/LogFormatter.php");
+require("src/Logger.php");
+require("src/LogFormatter.php");

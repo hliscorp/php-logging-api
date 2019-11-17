@@ -1,9 +1,6 @@
 <?php
 namespace Lucinda\Logging;
 
-require_once("Logger.php");
-require_once("LogFormatter.php");
-
 /**
  * Logs messages/errors into syslog service.
  */
