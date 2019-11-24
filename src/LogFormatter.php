@@ -28,7 +28,7 @@ class LogFormatter
     /**
      * Builds log message based on global pattern and info to be logged.
      *
-     * @param string|\Exception|\Throwable $info Information that needs being logged
+     * @param string|\Throwable $info Information that needs being logged
      * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424)
      * @return string Compiled log message ready to be saved.
      */
