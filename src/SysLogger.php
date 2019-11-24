@@ -14,7 +14,7 @@ class SysLogger extends Logger
      * @param string $applicationName Name of your application to appear in log lines.
      * @param LogFormatter $formatter Class responsible in creating and formatting logging message.
      */
-    public function __construct($applicationName, LogFormatter $formatter)
+    public function __construct(string $applicationName, LogFormatter $formatter): void
     {
         $this->applicationName = $applicationName;
         $this->formatter = $formatter;
@@ -26,7 +26,7 @@ class SysLogger extends Logger
      * @param string|\Throwable $info Information that needs being logged
      * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424)
      */
-    protected function log($info, $level)
+    protected function log($info, int $level): void
     {
         openlog($this->applicationName, LOG_NDELAY, LOG_USER);
         syslog($level, $this->formatter->format($info, $level));

@@ -11,7 +11,7 @@ abstract class Logger
      *
      * @param \Throwable $exception
      */
-    public function emergency($exception)
+    public function emergency(\Throwable $exception): void
     {
         $this->log($exception, LOG_EMERG);
     }
@@ -21,7 +21,7 @@ abstract class Logger
      *
      * @param \Throwable $exception
      */
-    public function alert($exception)
+    public function alert(\Throwable $exception): void
     {
         $this->log($exception, LOG_ALERT);
     }
@@ -31,7 +31,7 @@ abstract class Logger
      *
      * @param \Throwable $exception
      */
-    public function critical($exception)
+    public function critical(\Throwable $exception): void
     {
         $this->log($exception, LOG_CRIT);
     }
@@ -41,7 +41,7 @@ abstract class Logger
      *
      * @param \Throwable $exception
      */
-    public function error($exception)
+    public function error(\Throwable $exception): void
     {
         $this->log($exception, LOG_ERR);
     }
@@ -51,7 +51,7 @@ abstract class Logger
      *
      * @param string $message
      */
-    public function warning($message)
+    public function warning(string $message): void
     {
         $this->log($message, LOG_WARNING);
     }
@@ -61,7 +61,7 @@ abstract class Logger
      *
      * @param string $message
      */
-    public function notice($message)
+    public function notice(string $message): void
     {
         $this->log($message, LOG_NOTICE);
     }
@@ -71,7 +71,7 @@ abstract class Logger
      *
      * @param string $message
      */
-    public function debug($message)
+    public function debug(string $message): void
     {
         $this->log($message, LOG_DEBUG);
     }
@@ -81,7 +81,7 @@ abstract class Logger
      *
      * @param string $message
      */
-    public function info($message)
+    public function info(string $message): void
     {
         $this->log($message, LOG_INFO);
     }
@@ -92,5 +92,5 @@ abstract class Logger
      * @param string|\Throwable $info Information that needs being logged
      * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424)
      */
-    abstract protected function log($info, $level);
+    abstract protected function log($info, int $level): void;
 }
