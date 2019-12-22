@@ -14,7 +14,7 @@ class SysLogger extends Logger
      * @param string $applicationName Name of your application to appear in log lines.
      * @param LogFormatter $formatter Class responsible in creating and formatting logging message.
      */
-    public function __construct(string $applicationName, LogFormatter $formatter): void
+    public function __construct(string $applicationName, LogFormatter $formatter)
     {
         $this->applicationName = $applicationName;
         $this->formatter = $formatter;

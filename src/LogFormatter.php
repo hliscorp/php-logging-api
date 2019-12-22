@@ -20,7 +20,7 @@ class LogFormatter
      *
      * @param string $pattern Log message pattern (eg: %d %u %f %l %m)
      */
-    public function __construct(string $pattern): void
+    public function __construct(string $pattern)
     {
         $this->pattern = $pattern;
     }
