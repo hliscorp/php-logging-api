@@ -1,10 +1,12 @@
 <?php
-namespace Lucinda\Logging;
+namespace Lucinda\Logging\Driver\SysLog;
+
+use Lucinda\Logging\LogFormatter;
 
 /**
  * Logs messages/errors into syslog service.
  */
-class SysLogger extends Logger
+class Logger extends \Lucinda\Logging\Logger
 {
     private $applicationName;
     private $formatter;

@@ -1,10 +1,12 @@
 <?php
-namespace Lucinda\Logging;
+namespace Lucinda\Logging\Driver\File;
+
+use Lucinda\Logging\LogFormatter;
 
 /**
  * Logs messages/errors into simple files.
  */
-class FileLogger extends Logger
+class Logger extends \Lucinda\Logging\Logger
 {
     const EXTENSION = "log";
     
