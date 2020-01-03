@@ -71,9 +71,9 @@ class Wrapper
     /**
      * Gets detected logger.
      *
-     * @return MultiLogger List of loggers found.
+     * @return Logger List of loggers found.
      */
-    public function getLogger(): MultiLogger
+    public function getLogger(): Logger
     {
         return new MultiLogger($this->loggers);
     }
