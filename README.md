@@ -1,9 +1,8 @@
 # Logging API
 
 This API is a very light weight logging system built on principles of simplicity and flexibility. Unlike Monolog, the industry standard in our days, it brings no tangible performance penalties and has near-zero learning curve just by keeping complexity to a minimum while offering you the ability to extend functionalities. In light of these ideas, the whole idea of logging is reduced to just three steps:
-
 - **[configuration](#configuration)**: setting up an XML file where one or more loggers are set for each development environment
-- **[initialization](#initialization)**: creating a [Lucinda\Logging\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/src/Wrapper.php) instance with above XML and current development environment then calling *getLogger()* method
+- **[initialization](#initialization)**: creating a [Lucinda\Logging\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/src/Wrapper.php) instance based on above XML and current development environment then calling *getLogger()* method
 - **[logging](#logging)**: use shared driver [Lucinda\Logging\Logger](https://github.com/aherne/php-logging-api/blob/v3.0.0/src/Logger.php) returned by method above to log messages or exceptions/errors using methods named after SYSLOG priority
 
 ## Installation
@@ -14,10 +13,10 @@ This library is fully PSR-4 compliant and only requires PHP7.1+ interpreter. For
 composer require lucinda/logging
 ```
 
-Then proceed with steps above and create a file (eg: index.php) in project root with following code:
+Proceed to **[configuration](#configuration)** step below then create a file (eg: index.php) in project root with following code:
 
 ```php
-require_once("vendor/autoload.php");
+require(__DIR__."/vendor/autoload.php");
 $object = new Lucinda\Logging\Wrapper(simplexml_load_file(XML_FILE_NAME), DEVELOPMENT_ENVIRONMENT);
 $logger = $object->getLogger();
 // EXAMPLE: logs a "test" message with LOG_INFO priority
@@ -147,7 +146,7 @@ Assuming both classes above are found in *foo/bar* folder relative to project ro
 ```
 ## Initialization
 
-Now that XML is configured, you can get a logger to save and use later on whenever needed:
+Now that XML is configured, you can get a logger to save and use later on whenever needed by querying [Lucinda\Logging\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/src/Wrapper.php):
 
 ```php
 $object = new Lucinda\Logging\Wrapper(simplexml_load_file(XML_FILE_NAME), DEVELOPMENT_ENVIRONMENT);
@@ -156,7 +155,7 @@ $logger = $object->getLogger();
 
 Logger returned is a [Lucinda\Logging\Logger](https://github.com/aherne/php-logging-api/blob/v3.0.0/src/Logger.php) that hides complexity of logger(s) underneath through a common interface centered on logging operations. 
 
-**NOTE**: because XML parsing is somewhat costly, it is recommended to save $logger object and reuse it throughout application lifecycle.
+**NOTE**: because XML parsing is somewhat costly, it is recommended to save $object somewhere and reuse it throughout application lifecycle.
 
 ## Logging
 
