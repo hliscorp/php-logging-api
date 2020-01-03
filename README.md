@@ -6,6 +6,8 @@ This API is a very light weight logging system built on principles of simplicity
 - **[initialization](#initialization)**: creating a [Lucinda\Logging\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/src/Wrapper.php) instance with above XML and current development environment then calling *getLogger()* method
 - **[logging](#logging)**: use shared driver [Lucinda\Logging\Logger](https://github.com/aherne/php-logging-api/blob/v3.0.0/src/Logger.php) returned by method above to log messages or exceptions/errors using methods named after SYSLOG priority
 
+## Installation
+
 This library is fully PSR-4 compliant and only requires PHP7.1+ interpreter. For installation run:
 
 ```console
@@ -22,7 +24,9 @@ $logger = $object->getLogger();
 $logger->info("test");
 ```
 
-API has 100% unit test coverage, but uses [UnitTest API](https://github.com/aherne/unit-testing) instead of PHPUnit for testing. For tests and examples, check:
+### Unit Tests
+
+API has 100% unit test coverage, but uses [UnitTest API](https://github.com/aherne/unit-testing) instead of PHPUnit for greater flexibility. For tests and examples, check:
 
 - [test.php](https://github.com/aherne/php-logging-api/blob/v3.0.0/test.php): runs unit tests in console
 - [unit-tests.xml](https://github.com/aherne/php-logging-api/blob/v3.0.0/unit-tests.xml): sets up unit tests and mocks "loggers" tag
