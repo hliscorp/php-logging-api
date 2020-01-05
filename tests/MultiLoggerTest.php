@@ -88,8 +88,8 @@ class MultiLoggerTest
         $message = $throwable->getMessage();
         $className = get_class($throwable);
         $result = [];
-        $result[] = (new Files("messages__".date("Y-m-d").".log"))->assertContains(date("Y-m-d H:i:s")." ".$logLevel." ".$className." ".$info["file"]." ".($info["line"]-1)." ".$message." test 127.0.0.1 Chrome", "checks file logger");
-        $result[] = (new Files("/var/log/syslog"))->assertContains($logLevel." ".$className." ".__FILE__." ".($info["line"]-1)." ".$message." test 127.0.0.1 Chrome", "checks syslogger");
+        $result[] = (new Files("messages__".date("Y-m-d").".log"))->assertContains(date("Y-m-d H:i:s")." ".$logLevel." ".$className." ".$info["file"]." ".($info["line"]-2)." ".$message." test 127.0.0.1 Chrome", "checks file logger");
+        $result[] = (new Files("/var/log/syslog"))->assertContains($logLevel." ".$className." ".__FILE__." ".($info["line"]-2)." ".$message." test 127.0.0.1 Chrome", "checks syslogger");
         return $result;
     }
 }
