@@ -6,7 +6,8 @@
     "homepage": "http://www.lucinda-framework.com/logging",
     "license": "MIT",
     "require": {
-        "php": "^7.1"
+        "php": "^7.1",
+        "ext-SimpleXML": "*"
     },
     "require-dev": {
     	"lucinda/unit-testing": "^1.0"

@@ -7,7 +7,7 @@ This API is a very light weight logging system built on principles of simplicity
 
 ## Installation
 
-This library is fully PSR-4 compliant and only requires PHP7.1+ interpreter. For installation run:
+This library is fully PSR-4 compliant and only requires PHP7.1+ interpreter and SimpleXML extension. For installation run:
 
 ```console
 composer require lucinda/logging

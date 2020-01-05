@@ -17,8 +17,8 @@ class WrapperTest
         $logger = $wrapper->getLogger();
         $result = [];
         $logger->emergency(new \Exception("error"));
-        $result[] = (new Files("messages__".date("Y-m-d").".log"))->assertContains(date("Y-m-d H:i:s")." ".LOG_EMERG." Exception ".__FILE__." ".(__LINE__-1)." error test 127.0.0.1 Chrome");
-        $result[] = (new Files("/var/log/syslog"))->assertContains(LOG_EMERG." Exception ".__FILE__." ".(__LINE__-2)." error test 127.0.0.1 Chrome");
+        $result[] = (new Files("messages__".date("Y-m-d").".log"))->assertContains(date("Y-m-d H:i:s")." ".LOG_EMERG." Exception ".__FILE__." ".(__LINE__-1)." error test 127.0.0.1 Chrome", "checks file logger");
+        $result[] = (new Files("/var/log/syslog"))->assertContains(LOG_EMERG." Exception ".__FILE__." ".(__LINE__-2)." error test 127.0.0.1 Chrome", "checks syslogger");
         return $result;
     }
         

@@ -16,82 +16,80 @@ class MultiLoggerTest
 
     public function emergency()
     {
-        $result = [];
-        $this->logger->emergency(new \Exception("error"));
-        $result[] = (new Files("messages__".date("Y-m-d").".log"))->assertContains(date("Y-m-d H:i:s")." ".LOG_EMERG." Exception ".__FILE__." ".(__LINE__-1)." error test 127.0.0.1 Chrome");
-        $result[] = (new Files("/var/log/syslog"))->assertContains(LOG_EMERG." Exception ".__FILE__." ".(__LINE__-2)." error test 127.0.0.1 Chrome");
-        return $result;
+        $throwable = new \Exception("error");
+        $this->logger->emergency($throwable);
+        return $this->checkErrorLogs(LOG_EMERG, $throwable);
     }
         
 
     public function alert()
     {
-        $result = [];
-        $this->logger->alert(new \Exception("error"));
-        $result[] = (new Files("messages__".date("Y-m-d").".log"))->assertContains(date("Y-m-d H:i:s")." ".LOG_ALERT." Exception ".__FILE__." ".(__LINE__-1)." error test 127.0.0.1 Chrome");
-        $result[] = (new Files("/var/log/syslog"))->assertContains(LOG_ALERT." Exception ".__FILE__." ".(__LINE__-2)." error test 127.0.0.1 Chrome");
-        return $result;
+        $throwable = new \Exception("error");
+        $this->logger->alert($throwable);
+        return $this->checkErrorLogs(LOG_ALERT, $throwable);
     }
         
 
     public function critical()
     {
-        $result = [];
-        $this->logger->critical(new \Exception("error"));
-        $result[] = (new Files("messages__".date("Y-m-d").".log"))->assertContains(date("Y-m-d H:i:s")." ".LOG_CRIT." Exception ".__FILE__." ".(__LINE__-1)." error test 127.0.0.1 Chrome");
-        $result[] = (new Files("/var/log/syslog"))->assertContains(LOG_CRIT." Exception ".__FILE__." ".(__LINE__-2)." error test 127.0.0.1 Chrome");
-        return $result;
+        $throwable = new \Exception("error");
+        $this->logger->critical($throwable);
+        return $this->checkErrorLogs(LOG_CRIT, $throwable);
     }
         
 
     public function error()
     {
-        $result = [];
-        $this->logger->error(new \Exception("error"));
-        $result[] = (new Files("messages__".date("Y-m-d").".log"))->assertContains(date("Y-m-d H:i:s")." ".LOG_ERR." Exception ".__FILE__." ".(__LINE__-1)." error test 127.0.0.1 Chrome");
-        $result[] = (new Files("/var/log/syslog"))->assertContains(LOG_ERR." Exception ".__FILE__." ".(__LINE__-2)." error test 127.0.0.1 Chrome");
-        return $result;
+        $throwable = new \Exception("error");
+        $this->logger->error($throwable);
+        return $this->checkErrorLogs(LOG_ERR, $throwable);
     }
         
 
     public function warning()
     {
-        $result = [];
         $this->logger->warning("message");
-        $result[] = (new Files("messages__".date("Y-m-d").".log"))->assertContains(date("Y-m-d H:i:s")." ".LOG_WARNING." %e ".__FILE__." ".(__LINE__-1)." message test 127.0.0.1 Chrome");
-        $result[] = (new Files("/var/log/syslog"))->assertContains(LOG_WARNING." %e ".__FILE__." ".(__LINE__-2)." message test 127.0.0.1 Chrome");
-        return $result;
+        return $this->checkStringLogs(LOG_WARNING, "message");
     }
         
 
     public function notice()
     {
-        $result = [];
         $this->logger->notice("message");
-        $result[] = (new Files("messages__".date("Y-m-d").".log"))->assertContains(date("Y-m-d H:i:s")." ".LOG_NOTICE." %e ".__FILE__." ".(__LINE__-1)." message test 127.0.0.1 Chrome");
-        $result[] = (new Files("/var/log/syslog"))->assertContains(LOG_NOTICE." %e ".__FILE__." ".(__LINE__-2)." message test 127.0.0.1 Chrome");
-        return $result;
+        return $this->checkStringLogs(LOG_NOTICE, "message");
     }
         
 
     public function debug()
     {
-        $result = [];
         $this->logger->debug("message");
-        $result[] = (new Files("messages__".date("Y-m-d").".log"))->assertContains(date("Y-m-d H:i:s")." ".LOG_DEBUG." %e ".__FILE__." ".(__LINE__-1)." message test 127.0.0.1 Chrome");
-        $result[] = (new Files("/var/log/syslog"))->assertContains(LOG_DEBUG." %e ".__FILE__." ".(__LINE__-2)." message test 127.0.0.1 Chrome");
-        return $result;
+        return $this->checkStringLogs(LOG_DEBUG, "message");
     }
         
 
     public function info()
     {
-        $result = [];
         $this->logger->info("message");
-        $result[] = (new Files("messages__".date("Y-m-d").".log"))->assertContains(date("Y-m-d H:i:s")." ".LOG_INFO." %e ".__FILE__." ".(__LINE__-1)." message test 127.0.0.1 Chrome");
-        $result[] = (new Files("/var/log/syslog"))->assertContains(LOG_INFO." %e ".__FILE__." ".(__LINE__-2)." message test 127.0.0.1 Chrome");
-        return $result;
+        return $this->checkStringLogs(LOG_INFO, "message");
     }
         
-
+    private function checkStringLogs(int $logLevel, string $message): array
+    {
+        $info = debug_backtrace(true)[0];
+        $result = [];
+        $result[] = (new Files("messages__".date("Y-m-d").".log"))->assertContains(date("Y-m-d H:i:s")." ".$logLevel." %e ".$info["file"]." ".($info["line"]-1)." ".$message." test 127.0.0.1 Chrome", "checks file logger");
+        $result[] = (new Files("/var/log/syslog"))->assertContains($logLevel." %e ".__FILE__." ".($info["line"]-1)." ".$message." test 127.0.0.1 Chrome", "checks syslogger");
+        return $result;
+    }
+    
+    private function checkErrorLogs(int $logLevel, \Throwable $throwable): array
+    {
+        $info = debug_backtrace(true)[0];
+        $message = $throwable->getMessage();
+        $className = get_class($throwable);
+        $result = [];
+        $result[] = (new Files("messages__".date("Y-m-d").".log"))->assertContains(date("Y-m-d H:i:s")." ".$logLevel." ".$className." ".$info["file"]." ".($info["line"]-1)." ".$message." test 127.0.0.1 Chrome", "checks file logger");
+        $result[] = (new Files("/var/log/syslog"))->assertContains($logLevel." ".$className." ".__FILE__." ".($info["line"]-1)." ".$message." test 127.0.0.1 Chrome", "checks syslogger");
+        return $result;
+    }
 }
