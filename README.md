@@ -171,7 +171,7 @@ Above has logged a "test" message with LOG_INFO priority in messages__YYYY-MM-DD
 
 ## Unit Tests
 
-API has 100% unit test coverage, but uses [UnitTest API](https://github.com/aherne/unit-testing) instead of PHPUnit for greater flexibility. For tests and examples, check:
+For tests and examples, check following files/folders in API sources:
 
 - [test.php](https://github.com/aherne/php-logging-api/blob/v3.0.0/test.php): runs unit tests in console
 - [unit-tests.xml](https://github.com/aherne/php-logging-api/blob/v3.0.0/unit-tests.xml): sets up unit tests and mocks "loggers" tag
