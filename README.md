@@ -152,7 +152,7 @@ Once you saved and stored $logger object obtained above, you are able to perform
 
 ## Installation
 
-This library is fully PSR-4 compliant and only requires PHP7.1+ interpreter and SimpleXML extension. For installation run:
+First choose a folder where API will be installed then write this command there using console:
 
 ```console
 composer require lucinda/logging
