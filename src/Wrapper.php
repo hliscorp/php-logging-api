@@ -44,7 +44,7 @@ class Wrapper
 
             // detects wrapper for loggers
             $loggerWrapper = null;
-            switch($className) {
+            switch ($className) {
                 case "Lucinda\\Logging\\Driver\\File\\Wrapper":
                     $loggerWrapper = new $className($xmlProperties);
                     break;

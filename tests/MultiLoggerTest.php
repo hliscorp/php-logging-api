@@ -1,6 +1,6 @@
 <?php
 namespace Test\Lucinda\Logging;
-    
+
 use Lucinda\Logging\Wrapper;
 use Lucinda\UnitTest\Validator\Files;
 

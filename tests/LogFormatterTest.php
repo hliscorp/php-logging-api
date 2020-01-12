@@ -1,12 +1,11 @@
 <?php
 namespace Test\Lucinda\Logging;
-    
+
 use Lucinda\Logging\LogFormatter;
 use Lucinda\UnitTest\Result;
 
 class LogFormatterTest
 {
-
     public function format()
     {
         $results = [];
@@ -22,6 +21,4 @@ class LogFormatterTest
         
         return $results;
     }
-        
-
 }

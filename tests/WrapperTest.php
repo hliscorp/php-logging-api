@@ -1,6 +1,6 @@
 <?php
 namespace Test\Lucinda\Logging;
-    
+
 use Lucinda\Logging\Wrapper;
 use Lucinda\UnitTest\Validator\Files;
 
@@ -21,6 +21,4 @@ class WrapperTest
         $result[] = (new Files("/var/log/syslog"))->assertContains(LOG_EMERG." Exception ".__FILE__." ".(__LINE__-2)." error test 127.0.0.1 Chrome", "checks syslogger");
         return $result;
     }
-        
-
 }
