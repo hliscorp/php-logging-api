@@ -169,7 +169,7 @@ $logger->info("test");
 
 Above has logged a "test" message with LOG_INFO priority in messages__YYYY-MM-DD.log file if same **loggers** tag as in example above is used.
 
-### Unit Tests
+## Unit Tests
 
 API has 100% unit test coverage, but uses [UnitTest API](https://github.com/aherne/unit-testing) instead of PHPUnit for greater flexibility. For tests and examples, check:
 
