@@ -16,32 +16,31 @@ API is fully PSR-4 compliant, only requiring PHP7.1+ interpreter and SimpleXML e
 To configure this API you must have a XML with a **loggers** tags inside:
 
 ```xml
-<loggers path="PATH">
-	<ENVIRONMENT>
-		<logger class="CLASS" OPTIONS/>
+<loggers path="...">
+	<{ENVIRONMENT}>
+		<logger class="..." {OPTIONS}/>
 		...
-	</ENVIRONMENT>
+	</{ENVIRONMENT}>
 	...
 </loggers>
 ```
 
 Where:
 
-- **PATH**: (optional) folder of custom [Lucinda\Logging\AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/src/AbstractLoggerWrapper.php) classes useful when developers desire to log using another mechanism than files/syslog already provided
-- **ENVIRONMENT**: (mandatory) name of development environment (eg: local, dev or live). Note: a *loggers* tag can have multiple ENVIRONMENT subtags and latter can have multiple *logger* children!
-- **CLASS**: (mandatory) full class name of [Lucinda\Logging\AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/src/AbstractLoggerWrapper.php) implementation, encapsulating respective logger configuration. Available values:
-    - [Lucinda\Logging\Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/drivers/File/Wrapper.php): use this if you want to log to files
-    - [Lucinda\Logging\Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/drivers/SysLog/Wrapper.php): use this if you want to log to syslog
-    - *NAMESPACE\CLASS*: use this for your own custom logger identified by file found in PATH folder by same name as CLASS (see: [How to bind a new logger](#how-to-bind-a-new-logger))
-- **OPTIONS**: (mandatory) attributes useful to configure respective logger:
-    - If CLASS = [Lucinda\Logging\Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/drivers/File/Wrapper.php), following tag attributes are avalable:
-        - *path*: (mandatory) base name of file in which log is saved. Eg: "messages"
-        - *rotation*: (optional) date algorithm to rotate log above. Eg: "Y-m-d"
-        - *format*: (mandatory) controls what will be displayed in log line (see: [How log lines are formatted](#how-log-lines-are-formatted)). Eg: "%d %v %e %f %l %m %u %i %a"
-    - If CLASS = [Lucinda\Logging\Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/drivers/SysLog/Wrapper.php), following attributes are available:
-        - *application*: (mandatory) value that identifies your site against other syslog lines. Eg: "mySite"
-        - *format*: (mandatory) controls what will be displayed in log line (see: [How log lines are formatted](#how-log-lines-are-formatted)). Eg: "%v %e %f %l %m %u %i %a"
-    - Otherwise, tag attributes will depend on the logger you need to create. Their values are available from argument of **setLogger** method CLASS will need to implement. (see: [How to bind a new logger](#how-to-bind-a-new-logger))
+- **loggers**: (mandatory) holds global logging policies policies.
+    - *path*: (optional) folder of custom [Lucinda\Logging\AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/src/AbstractLoggerWrapper.php) classes useful when developers desire to log using another mechanism than files/syslog already provided
+    - {ENVIRONMENT}: name of development environment (to be replaced with "local", "dev", "live", etc)
+        - **logger**: stores configuration settings for a single logger (eg: file logger)
+            - *class*: (mandatory) full class name of [Lucinda\Logging\AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/src/AbstractLoggerWrapper.php) implementation, encapsulating respective logger configuration. Available values:
+                - [Lucinda\Logging\Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/drivers/File/Wrapper.php): use this if you want to log to files
+                - [Lucinda\Logging\Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/drivers/SysLog/Wrapper.php): use this if you want to log to syslog
+                - NAMESPACE\CLASS: use this for your own custom logger identified by file found in PATH folder by same name as CLASS (see: [How to bind a new logger](#how-to-bind-a-new-logger))
+            - {OPTIONS}: a list of extra attributes necessary to configure respective logger identified by *class* above:
+                - *application*: (mandatory if [Lucinda\Logging\Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/drivers/SysLog/Wrapper.php)) value that identifies your site against other syslog lines. Eg: "mySite"
+                - *format*: (mandatory if [Lucinda\Logging\Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/drivers/SysLog/Wrapper.php) or [Lucinda\Logging\Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/drivers/File/Wrapper.php)) controls what will be displayed in log line (see: [How log lines are formatted](#how-log-lines-are-formatted)). Eg: "%d %v %e %f %l %m %u %i %a"
+                - *path*: (mandatory if [Lucinda\Logging\Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/drivers/File/Wrapper.php)) base name of file in which log is saved. Eg: "messages"
+                - *rotation*: (optional if [Lucinda\Logging\Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/drivers/File/Wrapper.php)) date algorithm to rotate log above. Eg: "Y-m-d"
+                - any other: if a custom logger is used. Their values are available from argument of **setLogger** method CLASS will need to implement. (see: [How to bind a new logger](#how-to-bind-a-new-logger))
 
 Example:
 
