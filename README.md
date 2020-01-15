@@ -27,7 +27,7 @@ To configure this API you must have a XML with a **loggers** tags inside:
 
 Where:
 
-- **loggers**: (mandatory) holds global logging policies policies.
+- **loggers**: (mandatory) holds global logging policies.
     - *path*: (optional) folder of custom [Lucinda\Logging\AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/v3.0.0/src/AbstractLoggerWrapper.php) classes useful when developers desire to log using another mechanism than files/syslog already provided
     - {ENVIRONMENT}: name of development environment (to be replaced with "local", "dev", "live", etc)
         - **logger**: stores configuration settings for a single logger (eg: file logger)
