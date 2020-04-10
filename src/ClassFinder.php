@@ -22,17 +22,17 @@ class ClassFinder
      * Locates and loads class on disk based on source name which may include subfolder and namespace
      *
      * @param string $className
-     * @throws Exception
+     * @throws ConfigurationException
      * @return string
      */
     public function find($className): string
     {
-        $classPath = $this->folder;
+        $classPath = "";
         
         // get classes loaded in subfolders
         $slashPosition = strrpos($className, "/");
         if ($slashPosition!==false) {
-            $classPath .= "/".substr($className, 0, $slashPosition);
+            $classPath = substr($className, 0, $slashPosition);
             $className = substr($className, $slashPosition+1);
         }
         
@@ -45,15 +45,15 @@ class ClassFinder
         }
         
         // loads class file
-        $filePath = $classPath."/".$simpleClassName.".php";
+        $filePath = ($this->folder?$this->folder."/":"").($classPath?$classPath."/":"").$simpleClassName.".php";
         if (!file_exists($filePath)) {
-            throw new Exception("File not found: ".$simpleClassName);
+            throw new ConfigurationException("File not found: ".$simpleClassName);
         }
         require_once($filePath);
         
         // validates if class exists
         if (!class_exists($className)) {
-            throw new Exception("Class not found: ".$className);
+            throw new ConfigurationException("Class not found: ".$className);
         }
         
         return $className;

@@ -23,7 +23,7 @@ abstract class AbstractLoggerWrapper
      *
      * @param \SimpleXMLElement $xml XML tag that is child of loggers.(environment)
      * @return Logger
-     * @throws Exception If resources referenced in XML do not exist or do not extend/implement required blueprint.
+     * @throws ConfigurationException If resources referenced in XML do not exist or do not extend/implement required blueprint.
      */
     abstract protected function setLogger(\SimpleXMLElement $xml): Logger;
     

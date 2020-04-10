@@ -13,7 +13,7 @@ class Wrapper
      *
      * @param \SimpleXMLElement $xml XML containing logger settings.
      * @param string $developmentEnvironment Development environment server is running into (eg: local, dev, live)
-     * @throws Exception If pointed file doesn't exist or is invalid
+     * @throws ConfigurationException If pointed file doesn't exist or is invalid
      */
     public function __construct(\SimpleXMLElement $xml, string $developmentEnvironment)
     {
@@ -29,7 +29,7 @@ class Wrapper
      *
      * @param string $loggersPath Path to logger classes.
      * @param \SimpleXMLElement $xml XML containing individual logger settings.
-     * @throws Exception If pointed file doesn't exist or is invalid
+     * @throws ConfigurationException If pointed file doesn't exist or is invalid
      */
     private function setLoggers(string $loggersPath, \SimpleXMLElement $xml): void
     {
@@ -49,13 +49,13 @@ class Wrapper
                     break;
                 default:
                     if (!$loggersPath || !is_dir($loggersPath)) {
-                        throw new Exception("Logger path not found or empty");
+                        throw new ConfigurationException("Logger path not found or empty");
                     }
                     $classFinder = new ClassFinder($loggersPath);
                     $className = $classFinder->find($className);
                     $loggerWrapper = new $className($xmlProperties);
                     if (!$loggerWrapper instanceof AbstractLoggerWrapper) {
-                        throw new Exception("Logger must be instance of AbstractLoggerWrapper!");
+                        throw new ConfigurationException("Logger must be instance of AbstractLoggerWrapper!");
                     }
                     break;
                 

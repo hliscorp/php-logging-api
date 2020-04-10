@@ -1,7 +1,7 @@
 <?php
 namespace Lucinda\Logging\Driver\SysLog;
 
-use Lucinda\Logging\Exception;
+use Lucinda\Logging\ConfigurationException;
 use Lucinda\Logging\LogFormatter;
 
 /**
@@ -14,18 +14,18 @@ class Wrapper extends \Lucinda\Logging\AbstractLoggerWrapper
      *
      * @param \SimpleXMLElement $xml XML tag that is child of loggers.(environment)
      * @return Logger
-     * @throws Exception If resources referenced in XML do not exist or do not extend/implement required blueprint.
+     * @throws ConfigurationException If resources referenced in XML do not exist or do not extend/implement required blueprint.
      */
     protected function setLogger(\SimpleXMLElement $xml): \Lucinda\Logging\Logger
     {
         $applicationName = (string) $xml["application"];
         if (!$applicationName) {
-            throw new Exception("Attribute 'application' is mandatory");
+            throw new ConfigurationException("Attribute 'application' is mandatory");
         }
         
         $pattern= (string) $xml["format"];
         if (!$pattern) {
-            throw new Exception("Attribute 'format' is mandatory");
+            throw new ConfigurationException("Attribute 'format' is mandatory");
         }
         
         return new Logger($applicationName, new LogFormatter($pattern));
