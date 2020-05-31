@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE xml>
+<xml>
+  <unit_tests>
+    <unit_test>
+      <sources path="drivers" namespace="Lucinda\Logging\Driver\"/>
+      <tests path="tests_drivers" namespace="Test\Lucinda\Logging\Driver\"/>
+    </unit_test>
+    <unit_test>
+      <sources path="src" namespace="Lucinda\Logging\"/>
+      <tests path="tests" namespace="Test\Lucinda\Logging\"/>
+    </unit_test>
+  </unit_tests>
+  <loggers>
+  	<local>
+      	<logger class="Lucinda\Logging\Driver\File\Wrapper" path="messages" format="%d %v %e %f %l %m %u %i %a" rotation="Y-m-d"/>
+      	<logger class="Lucinda\Logging\Driver\SysLog\Wrapper" application="unittest" format="%v %e %f %l %m %u %i %a"/>
+  	</local>
+  </loggers>
+</xml>

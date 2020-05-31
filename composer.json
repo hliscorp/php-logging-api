@@ -5,6 +5,19 @@
     "keywords": ["logging","loggers"],
     "homepage": "http://www.lucinda-framework.com/logging",
     "license": "MIT",
+    "require": {
+        "php": "^7.1",
+        "ext-SimpleXML": "*"
+    },
+    "require-dev": {
+    	"lucinda/unit-testing": "^1.0"
+    },
+    "autoload": {
+    	"psr-4": {
+        	"Lucinda\\Logging\\Driver\\": "drivers/",
+        	"Lucinda\\Logging\\": "src/"
+    	}
+    },
     "authors": [
         {
             "name": "Lucian Popescu",

@@ -1,10 +1,12 @@
 <?php
-namespace Lucinda\Logging;
+namespace Lucinda\Logging\Driver\SysLog;
+
+use Lucinda\Logging\LogFormatter;
 
 /**
  * Logs messages/errors into syslog service.
  */
-class SysLogger extends Logger
+class Logger extends \Lucinda\Logging\Logger
 {
     private $applicationName;
     private $formatter;
@@ -14,17 +16,19 @@ class SysLogger extends Logger
      * @param string $applicationName Name of your application to appear in log lines.
      * @param LogFormatter $formatter Class responsible in creating and formatting logging message.
      */
-    public function __construct($applicationName, LogFormatter $formatter)
+    public function __construct(string $applicationName, LogFormatter $formatter)
     {
         $this->applicationName = $applicationName;
         $this->formatter = $formatter;
     }
     
     /**
-     * {@inheritDoc}
-     * @see Logger::log()
+     * Performs the act of logging.
+     *
+     * @param string|\Throwable $info Information that needs being logged
+     * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424)
      */
-    protected function log($info, $level)
+    protected function log($info, int $level): void
     {
         openlog($this->applicationName, LOG_NDELAY, LOG_USER);
         syslog($level, $this->formatter->format($info, $level));
