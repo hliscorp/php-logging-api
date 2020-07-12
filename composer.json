@@ -1,9 +1,9 @@
 {
     "name": "lucinda/logging",
     "type": "library",
-    "description": "Light weight logging API built with performance and scalability in mind",
-    "keywords": ["logging","loggers"],
-    "homepage": "http://www.lucinda-framework.com/logging",
+    "description": "High-performance API performing logging for PHP applications into files or SysLog",
+    "keywords": ["logging","loggers","files","syslog"],
+    "homepage": "https://github.com/aherne/php-logging-api",
     "license": "MIT",
     "require": {
         "php": "^7.1",
