@@ -7,6 +7,9 @@ Table of contents:
 - [Logging](#logging)
 - [Installation](#installation)
 - [Unit Tests](#unit-tests)
+- [Specifications](#specifications)
+    - [How Are Log Lines Formatted](#how-are-log-lines-formatted)
+    - [How to Bind a Custom Logger](#how-to-bind-a-custom-logger)
 
 ## About
 
@@ -48,7 +51,7 @@ Where:
             - *class*: (mandatory) full class name of [Lucinda\Logging\AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/master/src/AbstractLoggerWrapper.php) implementation, encapsulating respective logger configuration. Available values:
                 - [Lucinda\Logging\Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/File/Wrapper.php): use this if you want to log to files
                 - [Lucinda\Logging\Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/SysLog/Wrapper.php): use this if you want to log to syslog
-                - NAMESPACE\CLASS: use this for your own custom logger identified by file found in PATH folder by same name as CLASS (see: [How to bind a new logger](#how-to-bind-a-new-logger))
+                - any user-defined PSR-4 compliant PHP class (incl. namespace) instance for your own custom logger (see: [How to bind a new logger](#how-to-bind-a-new-logger))
             - {OPTIONS}: a list of extra attributes necessary to configure respective logger identified by *class* above:
                 - *application*: (mandatory if [Lucinda\Logging\Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/SysLog/Wrapper.php)) value that identifies your site against other syslog lines. Eg: "mySite"
                 - *format*: (mandatory if [Lucinda\Logging\Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/SysLog/Wrapper.php) or [Lucinda\Logging\Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/File/Wrapper.php)) controls what will be displayed in log line (see: [How log lines are formatted](#how-log-lines-are-formatted)). Eg: "%d %v %e %f %l %m %u %i %a"
@@ -70,72 +73,6 @@ Example:
 </loggers>
 ```
 
-### How are log lines formatted
-
-As one can see above, "logger" tags whose *class* is [Lucinda\Logging\Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/File/Wrapper.php) and [Lucinda\Logging\Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/SysLog/Wrapper.php) support a *format* attribute whose value can be a concatenation of:
-
-- **%d**: current date using Y-m-d H:i:s format.
-- **%v**: syslog priority level constant value matching to Logger method called.
-- **%e**: name of thrown exception class ()
-- **%f**: absolute location of file that logged message or threw a Throwable
-- **%l**: line in file above where message was logged or Throwable/Exception was thrown
-- **%m**: value of logged message or Throwable message
-- **%e**: class name of Throwable, if log origin was a Throwable
-- **%u**: value of URL when logging occurred, if available (value of $_SERVER["REQUEST_URI"])
-- **%a**: value of USER AGENT header when logging occurred, if available (value of $_SERVER["HTTP_USER_AGENT"])
-- **%i**: value of IP  when logging occurred, if available (value of $_SERVER["REMOTE_ADDR"])
-
-### How to bind a new logger
-
-Let us assume you want to bind a new SQL logger to this API. First you need to implement the logger itself, which must extend [Lucinda\Logging\Logger](https://github.com/aherne/php-logging-api/blob/master/src/Logger.php) and implement its required **log** method:
-
-```php
-class SQLLogger extends Lucinda\Logging\Logger
-{
-    private $schema;
-    private $table;
-
-    public function __construct(string $schema, string $table)
-    {
-        $this->schema = $schema;
-        $this->table = $table;
-    }
-
-    protected function log($info, int $level): void
-    {
-        // log in sql database based on schema, table, info and level
-    }
-}
-```
-
-Now you need to bind logger above to XML configuration. To do so you must create another class extending [Lucinda\Logging\AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/master/src/AbstractLoggerWrapper.php) and implement its required **setLogger** method:
-
-```php
-require_once("SQLLogger.php");
-
-class SQLLoggerWrapper extends Lucinda\Logging\AbstractLoggerWrapper
-{
-    protected function setLogger(\SimpleXMLElement $xml): Logger
-    {
-        $schema = (string) $xml["schema"];
-        $table = (string) $xml["table;
-        return new SQLLogger($schema, $table);
-    }
-}
-```
-
-Assuming both classes above are found in *foo/bar* folder relative to project root you finally need to bind class above to XML:
-
-```xml
-<loggers path="foo/bar">
-    <local>
-        <logger class="SQLLoggerWrapper" table="logs" schema="logging_local"/>
-    </local>
-    <live>
-        <logger class="SQLLoggerWrapper" table="logs" schema="logging_production"/>
-    </live>
-</loggers>
-```
 ## Logging
 
 Now that XML is configured, you can get a logger to save and use later on whenever needed by querying [Lucinda\Logging\Wrapper](https://github.com/aherne/php-logging-api/blob/master/src/Wrapper.php):
@@ -189,3 +126,85 @@ For tests and examples, check following files/folders in API sources:
 - [unit-tests.xml](https://github.com/aherne/php-logging-api/blob/master/unit-tests.xml): sets up unit tests and mocks "loggers" tag
 - [tests](https://github.com/aherne/php-logging-api/tree/v3.0.0/tests): unit tests for classes from [src](https://github.com/aherne/php-logging-api/tree/v3.0.0/src) folder
 - [tests_drivers](https://github.com/aherne/php-logging-api/tree/v3.0.0/tests_drivers): unit tests for classes from [drivers](https://github.com/aherne/php-logging-api/tree/v3.0.0/drivers) folder
+
+## Specifications
+
+Some guides helping developers to get the best of this API:
+
+- [How Are Log Lines Formatted](#how-are-log-lines-formatted)
+- [How to Bind a Custom Logger](#how-to-bind-a-custom-logger)
+
+### How are log lines formatted
+
+As one can see above, [logger](#configuration) tags whose *class* is [Lucinda\Logging\Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/File/Wrapper.php) and [Lucinda\Logging\Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/SysLog/Wrapper.php) support a *format* attribute whose value can be a concatenation of:
+
+- **%d**: current date using Y-m-d H:i:s format.
+- **%v**: syslog priority level constant value matching to Logger method called.
+- **%e**: name of thrown exception class ()
+- **%f**: absolute location of file that logged message or threw a Throwable
+- **%l**: line in file above where message was logged or Throwable/Exception was thrown
+- **%m**: value of logged message or Throwable message
+- **%e**: class name of Throwable, if log origin was a Throwable
+- **%u**: value of URL when logging occurred, if available (value of $_SERVER["REQUEST_URI"])
+- **%a**: value of USER AGENT header when logging occurred, if available (value of $_SERVER["HTTP_USER_AGENT"])
+- **%i**: value of IP  when logging occurred, if available (value of $_SERVER["REMOTE_ADDR"])
+
+Example:
+
+```xml
+<logger format="%d %f %l" .../>
+```
+
+### How to bind a custom logger
+
+Let us assume you want to bind a new SQL logger to this API. First you need to implement the logger itself, which must extend [Lucinda\Logging\Logger](https://github.com/aherne/php-logging-api/blob/master/src/Logger.php) and implement its required **log** method:
+
+```php
+namespace Lucinda\Project\Loggers;
+
+class SQLLogger extends Lucinda\Logging\Logger
+{
+    private $schema;
+    private $table;
+
+    public function __construct(string $schema, string $table)
+    {
+        $this->schema = $schema;
+        $this->table = $table;
+    }
+
+    protected function log($info, int $level): void
+    {
+        // log in sql database based on schema, table, info and level
+    }
+}
+```
+
+Now you need to bind logger above to XML configuration. To do so you must create another class extending [Lucinda\Logging\AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/master/src/AbstractLoggerWrapper.php) and implement its required **setLogger** method:
+
+```php
+namespace Lucinda\Project\Loggers;
+
+class SQLLoggerWrapper extends Lucinda\Logging\AbstractLoggerWrapper
+{
+    protected function setLogger(\SimpleXMLElement $xml): Logger
+    {
+        $schema = (string) $xml["schema"];
+        $table = (string) $xml["table;
+        return new SQLLogger($schema, $table);
+    }
+}
+```
+
+Assuming both classes above are found in *foo/bar* folder relative to project root you finally need to bind class above to XML:
+
+```xml
+<loggers path="foo/bar">
+    <local>
+        <logger class="Lucinda\Project\Loggers\SQLLoggerWrapper" table="logs" schema="logging_local"/>
+    </local>
+    <live>
+        <logger class="Lucinda\Project\Loggers\SQLLoggerWrapper" table="logs" schema="logging_production"/>
+    </live>
+</loggers>
+```

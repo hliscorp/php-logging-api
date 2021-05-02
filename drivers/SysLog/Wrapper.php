@@ -20,12 +20,12 @@ class Wrapper extends \Lucinda\Logging\AbstractLoggerWrapper
     {
         $applicationName = (string) $xml["application"];
         if (!$applicationName) {
-            throw new ConfigurationException("Attribute 'application' is mandatory");
+            throw new ConfigurationException("Attribute 'application' is mandatory for sys logger");
         }
         
         $pattern= (string) $xml["format"];
         if (!$pattern) {
-            throw new ConfigurationException("Attribute 'format' is mandatory");
+            throw new ConfigurationException("Attribute 'format' is mandatory for sys logger");
         }
         
         return new Logger($applicationName, new LogFormatter($pattern));
