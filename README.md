@@ -45,7 +45,6 @@ To configure this API you must have a XML with a **loggers** tags inside:
 Where:
 
 - **loggers**: (mandatory) holds global logging policies.
-    - *path*: (optional) folder of custom [Lucinda\Logging\AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/master/src/AbstractLoggerWrapper.php) classes useful when developers desire to log using another mechanism than files/syslog already provided
     - {ENVIRONMENT}: name of development environment (to be replaced with "local", "dev", "live", etc)
         - **logger**: stores configuration settings for a single logger (eg: file logger)
             - *class*: (mandatory) full class name of [Lucinda\Logging\AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/master/src/AbstractLoggerWrapper.php) implementation, encapsulating respective logger configuration. Available values:
@@ -196,10 +195,10 @@ class SQLLoggerWrapper extends Lucinda\Logging\AbstractLoggerWrapper
 }
 ```
 
-Assuming both classes above are found in *foo/bar* folder relative to project root you finally need to bind class above to XML:
+In that case if "psr-4" attribute in composer.json associates "Lucinda\\Project\\" with "src/" folder then SQLLoggerWrapper must be placed in *src/Loggers* folder then you finally need to bind it to XML:
 
 ```xml
-<loggers path="foo/bar">
+<loggers>
     <local>
         <logger class="Lucinda\Project\Loggers\SQLLoggerWrapper" table="logs" schema="logging_local"/>
     </local>
