@@ -20,12 +20,12 @@ class Wrapper extends \Lucinda\Logging\AbstractLoggerWrapper
     {
         $filePath = (string) $xml["path"];
         if (!$filePath) {
-            throw new ConfigurationException("Attribute 'path' is mandatory");
+            throw new ConfigurationException("Attribute 'path' is mandatory for file logger");
         }
         
         $pattern= (string) $xml["format"];
         if (!$pattern) {
-            throw new ConfigurationException("Attribute 'format' is mandatory");
+            throw new ConfigurationException("Attribute 'format' is mandatory for file logger");
         }
         
         return new Logger($filePath, (string) $xml["rotation"], new LogFormatter($pattern));

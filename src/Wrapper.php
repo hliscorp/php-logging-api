@@ -20,46 +20,27 @@ class Wrapper
         if (empty($xml->loggers)) {
             return;
         }
-        $loggersPath = (string) $xml->loggers["path"];
-        $this->setLoggers($loggersPath, $xml->loggers->{$developmentEnvironment});
+        $this->setLoggers($xml->loggers->{$developmentEnvironment});
     }
     
     /**
      * Reads XML tag for loggers and saves them for later use.
      *
-     * @param string $loggersPath Path to logger classes.
      * @param \SimpleXMLElement $xml XML containing individual logger settings.
      * @throws ConfigurationException If pointed file doesn't exist or is invalid
      */
-    private function setLoggers(string $loggersPath, \SimpleXMLElement $xml): void
+    private function setLoggers(\SimpleXMLElement $xml): void
     {
         $list = $xml->xpath("//logger");
         foreach ($list as $xmlProperties) {
             // detects class name
             $className = (string) $xmlProperties["class"];
+            if (!$className) {
+                throw new ConfigurationException("Attribute 'class' is mandatory for 'logger' tag");
+            }
 
             // detects wrapper for loggers
-            $loggerWrapper = null;
-            switch ($className) {
-                case "Lucinda\\Logging\\Driver\\File\\Wrapper":
-                    $loggerWrapper = new $className($xmlProperties);
-                    break;
-                case "Lucinda\\Logging\\Driver\\SysLog\\Wrapper":
-                    $loggerWrapper = new $className($xmlProperties);
-                    break;
-                default:
-                    if (!$loggersPath || !is_dir($loggersPath)) {
-                        throw new ConfigurationException("Logger path not found or empty");
-                    }
-                    $classFinder = new ClassFinder($loggersPath);
-                    $className = $classFinder->find($className);
-                    $loggerWrapper = new $className($xmlProperties);
-                    if (!$loggerWrapper instanceof AbstractLoggerWrapper) {
-                        throw new ConfigurationException("Logger must be instance of AbstractLoggerWrapper!");
-                    }
-                    break;
-                
-            }
+            $loggerWrapper = new $className($xmlProperties);
             $this->loggers[] = $loggerWrapper->getLogger();
         }
     }
