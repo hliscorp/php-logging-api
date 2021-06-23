@@ -15,7 +15,9 @@
     "autoload": {
     	"psr-4": {
         	"Lucinda\\Logging\\Driver\\": "drivers/",
-        	"Lucinda\\Logging\\": "src/"
+        	"Lucinda\\Logging\\": "src/",
+        	"Test\\Lucinda\\Logging\\Driver\\": "tests_drivers/",
+        	"Test\\Lucinda\\Logging\\": "tests/"
     	}
     },
     "authors": [
