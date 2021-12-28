@@ -6,7 +6,7 @@ namespace Lucinda\Logging;
  */
 class Wrapper
 {
-    private $loggers = array();
+    private array $loggers = array();
     
     /**
      * Reads XML tag loggers.{environment}, finds and saves loggers found.

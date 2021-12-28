@@ -10,9 +10,9 @@ class Logger extends \Lucinda\Logging\Logger
 {
     const EXTENSION = "log";
     
-    private $filePath;
-    private $rotationPattern;
-    private $formatter;
+    private string $filePath;
+    private string $rotationPattern;
+    private LogFormatter $formatter;
     
     /**
      * Creates logger instance.
@@ -34,7 +34,7 @@ class Logger extends \Lucinda\Logging\Logger
      * @param string|\Throwable $info Information that needs being logged
      * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424)
      */
-    protected function log($info, int $level): void
+    protected function log(string|\Throwable $info, int $level): void
     {
         error_log($this->formatter->format($info, $level)."\n", 3, $this->filePath.($this->rotationPattern?"__".date($this->rotationPattern):"").".".self::EXTENSION);
     }

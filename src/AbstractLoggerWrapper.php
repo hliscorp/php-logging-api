@@ -6,12 +6,13 @@ namespace Lucinda\Logging;
  */
 abstract class AbstractLoggerWrapper
 {
-    protected $logger;
-    
+    protected Logger $logger;
+
     /**
      * Calls children to return a \Lucinda\Logger instance from matching "logger" XML tag
      *
      * @param \SimpleXMLElement $xml XML tag that is child of loggers.(environment)
+     * @throws ConfigurationException
      */
     public function __construct(\SimpleXMLElement $xml)
     {

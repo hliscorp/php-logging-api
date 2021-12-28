@@ -92,5 +92,5 @@ abstract class Logger
      * @param string|\Throwable $info Information that needs being logged
      * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424)
      */
-    abstract protected function log($info, int $level): void;
+    abstract protected function log(string|\Throwable $info, int $level): void;
 }

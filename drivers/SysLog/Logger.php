@@ -8,8 +8,8 @@ use Lucinda\Logging\LogFormatter;
  */
 class Logger extends \Lucinda\Logging\Logger
 {
-    private $applicationName;
-    private $formatter;
+    private string $applicationName;
+    private LogFormatter $formatter;
     
     /**
      * Creates a logger instance.
@@ -28,7 +28,7 @@ class Logger extends \Lucinda\Logging\Logger
      * @param string|\Throwable $info Information that needs being logged
      * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424)
      */
-    protected function log($info, int $level): void
+    protected function log(string|\Throwable $info, int $level): void
     {
         openlog($this->applicationName, LOG_NDELAY, LOG_USER);
         syslog($level, $this->formatter->format($info, $level));

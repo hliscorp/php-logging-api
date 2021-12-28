@@ -13,7 +13,7 @@ namespace Lucinda\Logging;
  */
 class LogFormatter
 {
-    private $pattern;
+    private string $pattern;
     
     /**
      * Creates instance and saves message pattern.
@@ -32,7 +32,7 @@ class LogFormatter
      * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424)
      * @return string Compiled log message ready to be saved.
      */
-    public function format($info, int $level): string
+    public function format(string|\Throwable $info, int $level): string
     {
         $message = $this->pattern;
         $message = str_replace("%d", date("Y-m-d H:i:s"), $message);
