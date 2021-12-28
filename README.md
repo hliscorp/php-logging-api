@@ -25,7 +25,7 @@ The whole idea of logging is reduced to just three steps:
 - **[binding points](#binding-points)**: binding user-defined components defined in XML/code to API prototypes in order to gain necessary abilities
 - **[logging](#logging)**: creating a [Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/src/Wrapper.php) instance based on above XML and using it to log
 
-API is fully PSR-4 compliant, only requiring PHP7.1+ interpreter and SimpleXML extension. To quickly see how it works, check:
+API is fully PSR-4 compliant, only requiring PHP8.1+ interpreter and SimpleXML extension. To quickly see how it works, check:
 
 - **[installation](#installation)**: describes how to install API on your computer, in light of steps above
 - **[unit tests](#unit-tests)**: API has 100% Unit Test coverage, using [UnitTest API](https://github.com/aherne/unit-testing) instead of PHPUnit for greater flexibility
