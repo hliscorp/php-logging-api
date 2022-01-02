@@ -28,6 +28,6 @@ class Wrapper extends \Lucinda\Logging\AbstractLoggerWrapper
             throw new ConfigurationException("Attribute 'format' is mandatory for file logger");
         }
         
-        return new Logger($filePath, (string) $xml["rotation"], new LogFormatter($pattern));
+        return new Logger($filePath, new LogFormatter($pattern), (string) $xml["rotation"]);
     }
 }
