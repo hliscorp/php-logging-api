@@ -23,13 +23,13 @@ The whole idea of logging is reduced to just three steps:
 
 - **[configuration](#configuration)**: setting up an XML file where one or more loggers are set for each development environment
 - **[binding points](#binding-points)**: binding user-defined components defined in XML/code to API prototypes in order to gain necessary abilities
-- **[logging](#logging)**: creating a [Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/src/Wrapper.php) instance based on above XML and using it to log
+- **[logging](#logging)**: creating a [Wrapper](https://github.com/aherne/php-logging-api/blob/master/src/Wrapper.php) instance based on above XML and using it to log
 
 API is fully PSR-4 compliant, only requiring PHP8.1+ interpreter and SimpleXML extension. To quickly see how it works, check:
 
 - **[installation](#installation)**: describes how to install API on your computer, in light of steps above
 - **[unit tests](#unit-tests)**: API has 100% Unit Test coverage, using [UnitTest API](https://github.com/aherne/unit-testing) instead of PHPUnit for greater flexibility
-- **[example](https://github.com/aherne/php-logging-api/blob/v4.0/tests/WrapperTest.php)**: shows a deep example of API functionality based on unit test for [Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/src/Wrapper.php)
+- **[example](https://github.com/aherne/php-logging-api/blob/master/tests/WrapperTest.php)**: shows a deep example of API functionality based on unit test for [Wrapper](https://github.com/aherne/php-logging-api/blob/master/src/Wrapper.php)
 
 All classes inside belong to **Lucinda\Logging** namespace!
 
@@ -52,15 +52,15 @@ Where:
 - **loggers**: (mandatory) holds global logging policies.
     - {ENVIRONMENT}: name of development environment (to be replaced with "local", "dev", "live", etc)
         - **logger**: stores configuration settings for a single logger (eg: file logger)
-            - *class*: (mandatory) full class name of [AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/v4.0/src/AbstractLoggerWrapper.php) implementation, encapsulating respective logger configuration. Available values:
-                - [Lucinda\Logging\Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/drivers/File/Wrapper.php): use this if you want to log to files
-                - [Lucinda\Logging\Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/drivers/SysLog/Wrapper.php): use this if you want to log to syslog
+            - *class*: (mandatory) full class name of [AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/master/src/AbstractLoggerWrapper.php) implementation, encapsulating respective logger configuration. Available values:
+                - [Lucinda\Logging\Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/File/Wrapper.php): use this if you want to log to files
+                - [Lucinda\Logging\Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/SysLog/Wrapper.php): use this if you want to log to syslog
                 - any user-defined PSR-4 compliant PHP class (incl. namespace) instance for your own custom logger (see: [How to bind a new logger](#how-to-bind-a-new-logger))
             - {OPTIONS}: a list of extra attributes necessary to configure respective logger identified by *class* above:
-                - *application*: (mandatory if [Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/drivers/SysLog/Wrapper.php)) value that identifies your site against other syslog lines. Eg: "mySite"
-                - *format*: (mandatory if [Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/drivers/SysLog/Wrapper.php) or [Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/drivers/File/Wrapper.php)) controls what will be displayed in log line (see: [How log lines are formatted](#how-log-lines-are-formatted)). Eg: "%d %v %e %f %l %m %u %i %a"
-                - *path*: (mandatory if [Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/drivers/File/Wrapper.php)) base name of file in which log is saved. Eg: "messages"
-                - *rotation*: (optional if [Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/drivers/File/Wrapper.php)) date algorithm to rotate log above. Eg: "Y-m-d"
+                - *application*: (mandatory if [Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/SysLog/Wrapper.php)) value that identifies your site against other syslog lines. Eg: "mySite"
+                - *format*: (mandatory if [Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/SysLog/Wrapper.php) or [Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/File/Wrapper.php)) controls what will be displayed in log line (see: [How log lines are formatted](#how-log-lines-are-formatted)). Eg: "%d %v %e %f %l %m %u %i %a"
+                - *path*: (mandatory if [Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/File/Wrapper.php)) base name of file in which log is saved. Eg: "messages"
+                - *rotation*: (optional if [Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/File/Wrapper.php)) date algorithm to rotate log above. Eg: "Y-m-d"
                 - any other: if a custom logger is used. Their values are available from argument of **setLogger** method CLASS will need to implement. (see: [How to bind a new logger](#how-to-bind-a-new-logger))
 
 Example:
@@ -83,25 +83,25 @@ In order to remain flexible and achieve highest performance, API takes no more a
 
 | XML Attribute @ Tag | Class Prototype | Ability Gained |
 | --- | --- | --- |
-| [class @ logger](#configuration) | [AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/v4.0/src/AbstractLoggerWrapper.php) | Registers a logger |
+| [class @ logger](#configuration) | [AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/master/src/AbstractLoggerWrapper.php) | Registers a logger |
 
-API already has following [AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/v4.0/src/AbstractLoggerWrapper.php) implementation embedded:
+API already has following [AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/master/src/AbstractLoggerWrapper.php) implementation embedded:
 
-- [Lucinda\Logging\Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/drivers/File/Wrapper.php): for logging to a rotating file on disk
-- [Lucinda\Logging\Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/drivers/SysLog/Wrapper.php): for logging on syslog
+- [Lucinda\Logging\Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/File/Wrapper.php): for logging to a rotating file on disk
+- [Lucinda\Logging\Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/SysLog/Wrapper.php): for logging on syslog
 
 But developers can bind their own (check: [How to Bind a Custom Logger](#how-to-bind-a-custom-logger)) 
 
 ## Logging
 
-Now that XML is configured, you can get a logger to save and use later on whenever needed by querying [Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/src/Wrapper.php):
+Now that XML is configured, you can get a logger to save and use later on whenever needed by querying [Wrapper](https://github.com/aherne/php-logging-api/blob/master/src/Wrapper.php):
 
 ```php
 $object = new Lucinda\Logging\Wrapper(simplexml_load_file(XML_FILE_NAME), DEVELOPMENT_ENVIRONMENT);
 $logger = $object->getLogger();
 ```
 
-Logger returned is a [Logger](#interface-logger) that hides complexity of logger(s) underneath through a common interface centered on logging operations. Each [Logger](#interface-logger) must have a [AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/v4.0/src/AbstractLoggerWrapper.php) whose job is to generate it based on info in XML. 
+Logger returned is a [Logger](#interface-logger) that hides complexity of logger(s) underneath through a common interface centered on logging operations. Each [Logger](#interface-logger) must have a [AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/master/src/AbstractLoggerWrapper.php) whose job is to generate it based on info in XML. 
 
 **NOTE**: because XML parsing is somewhat costly, it is recommended to save $logger somewhere and reuse it throughout application lifecycle.
 
@@ -128,8 +128,8 @@ Above has logged a "test" message with LOG_INFO priority in messages__YYYY-MM-DD
 
 For tests and examples, check following files/folders in API sources:
 
-- [test.php](https://github.com/aherne/php-logging-api/blob/v4.0/test.php): runs unit tests in console
-- [unit-tests.xml](https://github.com/aherne/php-logging-api/blob/v4.0/unit-tests.xml): sets up unit tests and mocks "loggers" tag
+- [test.php](https://github.com/aherne/php-logging-api/blob/master/test.php): runs unit tests in console
+- [unit-tests.xml](https://github.com/aherne/php-logging-api/blob/master/unit-tests.xml): sets up unit tests and mocks "loggers" tag
 - [tests](https://github.com/aherne/php-logging-api/tree/v3.0.0/tests): unit tests for classes from [src](https://github.com/aherne/php-logging-api/tree/v3.0.0/src) folder
 - [tests_drivers](https://github.com/aherne/php-logging-api/tree/v3.0.0/tests_drivers): unit tests for classes from [drivers](https://github.com/aherne/php-logging-api/tree/v3.0.0/drivers) folder
 
@@ -139,7 +139,7 @@ For tests and examples, check following files/folders in API sources:
 
 ### Interface Logger
 
-[Logger](https://github.com/aherne/php-logging-api/blob/v4.0/src/Logger.php) interface provides blueprints for level-oriented logging using following methods: 
+[Logger](https://github.com/aherne/php-logging-api/blob/master/src/Logger.php) interface provides blueprints for level-oriented logging using following methods: 
 
 | Method | Arguments | Returns | Description |
 | --- | --- | --- | --- |
@@ -154,11 +154,11 @@ For tests and examples, check following files/folders in API sources:
 
 Usage example:
 
-https://github.com/aherne/php-logging-api/blob/v4.0/drivers/File/Logger.php
+https://github.com/aherne/php-logging-api/blob/master/drivers/File/Logger.php
 
 ### Abstract Class LoggerWrapper
 
-[AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/v4.0/src/AbstractLoggerWrapper.php) abstract class implements conversion of data in XML to a [Logger](#interface-logger) instance via following public methods:
+[AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/master/src/AbstractLoggerWrapper.php) abstract class implements conversion of data in XML to a [Logger](#interface-logger) instance via following public methods:
 
 | Method | Arguments | Returns | Description |
 | --- | --- | --- | --- |
@@ -173,7 +173,7 @@ and following prototype method that needs to be implemented by developers:
 
 Usage example:
 
-https://github.com/aherne/php-logging-api/blob/v4.0/drivers/File/Wrapper.php
+https://github.com/aherne/php-logging-api/blob/master/drivers/File/Wrapper.php
 
 ## Specifications
 
@@ -184,7 +184,7 @@ Some guides helping developers to get the best of this API:
 
 ### How are log lines formatted
 
-As one can see above, [logger](#configuration) tags whose *class* is [Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/drivers/File/Wrapper.php) and [Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/v4.0/drivers/SysLog/Wrapper.php) support a *format* attribute whose value can be a concatenation of:
+As one can see above, [logger](#configuration) tags whose *class* is [Driver\File\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/File/Wrapper.php) and [Driver\SysLog\Wrapper](https://github.com/aherne/php-logging-api/blob/master/drivers/SysLog/Wrapper.php) support a *format* attribute whose value can be a concatenation of:
 
 - **%d**: current date using Y-m-d H:i:s format.
 - **%v**: syslog priority level constant value matching to Logger method called.
@@ -226,7 +226,7 @@ class SQLLogger extends Lucinda\Logging\Logger
 }
 ```
 
-Now you need to bind logger above to XML configuration. To do so you must create another class extending [AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/v4.0/src/AbstractLoggerWrapper.php) and implement its required **setLogger** method:
+Now you need to bind logger above to XML configuration. To do so you must create another class extending [AbstractLoggerWrapper](https://github.com/aherne/php-logging-api/blob/master/src/AbstractLoggerWrapper.php) and implement its required **setLogger** method:
 
 ```php
 class SQLLoggerWrapper extends Lucinda\Logging\AbstractLoggerWrapper
