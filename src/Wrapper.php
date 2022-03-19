@@ -31,7 +31,7 @@ class Wrapper
      */
     private function setLoggers(\SimpleXMLElement $xml): void
     {
-        $list = $xml->xpath("//logger");
+        $list = $xml->xpath("logger");
         foreach ($list as $xmlProperties) {
             // detects class name
             $className = (string) $xmlProperties["class"];
