@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Logging;
 
 /**
@@ -6,8 +7,11 @@ namespace Lucinda\Logging;
  */
 class MultiLogger extends Logger
 {
+    /**
+     * @var Logger[]
+     */
     private array $loggers;
-    
+
     /**
      * Creates an object.
      *
@@ -17,7 +21,7 @@ class MultiLogger extends Logger
     {
         $this->loggers = $loggers;
     }
-    
+
     /**
      * Performs the act of logging.
      *

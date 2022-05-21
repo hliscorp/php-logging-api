@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Logging\Driver\File;
 
 use Lucinda\Logging\LogFormatter;
@@ -8,12 +9,12 @@ use Lucinda\Logging\LogFormatter;
  */
 class Logger extends \Lucinda\Logging\Logger
 {
-    const EXTENSION = "log";
-    
+    public const EXTENSION = "log";
+
     private string $filePath;
     private string $rotationPattern;
     private LogFormatter $formatter;
-    
+
     /**
      * Creates logger instance.
      *
@@ -27,7 +28,7 @@ class Logger extends \Lucinda\Logging\Logger
         $this->rotationPattern = $rotationPattern;
         $this->formatter = $formatter;
     }
-    
+
     /**
      * Performs the act of logging.
      *
@@ -36,6 +37,7 @@ class Logger extends \Lucinda\Logging\Logger
      */
     protected function log(string|\Throwable $info, int $level): void
     {
-        error_log($this->formatter->format($info, $level)."\n", 3, $this->filePath.($this->rotationPattern?"__".date($this->rotationPattern):"").".".self::EXTENSION);
+        $fileName = $this->filePath.($this->rotationPattern ? "__".date($this->rotationPattern) : "").".".self::EXTENSION;
+        error_log($this->formatter->format($info, $level)."\n", 3, $fileName);
     }
 }

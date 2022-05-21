@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Logging\Driver\File;
 
 use Lucinda\Logging\ConfigurationException;
@@ -22,12 +23,12 @@ class Wrapper extends \Lucinda\Logging\AbstractLoggerWrapper
         if (!$filePath) {
             throw new ConfigurationException("Attribute 'path' is mandatory for file logger");
         }
-        
+
         $pattern= (string) $xml["format"];
         if (!$pattern) {
             throw new ConfigurationException("Attribute 'format' is mandatory for file logger");
         }
-        
-        return new Logger($filePath, new LogFormatter($pattern), (string) $xml["rotation"]);
+
+        return new Logger($filePath, new LogFormatter($pattern, $this->requestInformation), (string) $xml["rotation"]);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Logging\Driver\SysLog;
 
 use Lucinda\Logging\LogFormatter;
@@ -10,7 +11,7 @@ class Logger extends \Lucinda\Logging\Logger
 {
     private string $applicationName;
     private LogFormatter $formatter;
-    
+
     /**
      * Creates a logger instance.
      * @param string $applicationName Name of your application to appear in log lines.
@@ -21,7 +22,7 @@ class Logger extends \Lucinda\Logging\Logger
         $this->applicationName = $applicationName;
         $this->formatter = $formatter;
     }
-    
+
     /**
      * Performs the act of logging.
      *

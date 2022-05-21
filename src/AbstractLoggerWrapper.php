@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Logging;
 
 /**
@@ -7,6 +8,7 @@ namespace Lucinda\Logging;
 abstract class AbstractLoggerWrapper
 {
     protected Logger $logger;
+    protected RequestInformation $requestInformation;
 
     /**
      * Calls children to return a \Lucinda\Logger instance from matching "logger" XML tag
@@ -14,11 +16,12 @@ abstract class AbstractLoggerWrapper
      * @param \SimpleXMLElement $xml XML tag that is child of loggers.(environment)
      * @throws ConfigurationException
      */
-    public function __construct(\SimpleXMLElement $xml)
+    public function __construct(\SimpleXMLElement $xml, RequestInformation $requestInformation)
     {
+        $this->requestInformation = $requestInformation;
         $this->logger = $this->setLogger($xml);
     }
-    
+
     /**
      * Detects Logger instance based on XML tag supplied
      *
@@ -27,7 +30,7 @@ abstract class AbstractLoggerWrapper
      * @throws ConfigurationException If resources referenced in XML do not exist or do not extend/implement required blueprint.
      */
     abstract protected function setLogger(\SimpleXMLElement $xml): Logger;
-    
+
     /**
      * Gets detected logger
      *
