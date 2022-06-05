@@ -90,8 +90,8 @@ abstract class Logger
     /**
      * Performs the act of logging.
      *
-     * @param string|\Throwable $info Information that needs being logged
-     * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424)
+     * @param string|\Throwable $info  Information that needs being logged
+     * @param integer           $level Log level (see: https://tools.ietf.org/html/rfc5424)
      */
     abstract protected function log(string|\Throwable $info, int $level): void;
 }

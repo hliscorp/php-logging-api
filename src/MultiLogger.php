@@ -25,8 +25,8 @@ class MultiLogger extends Logger
     /**
      * Performs the act of logging.
      *
-     * @param string|\Throwable $info Information that needs being logged
-     * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424)
+     * @param string|\Throwable $info  Information that needs being logged
+     * @param integer           $level Log level (see: https://tools.ietf.org/html/rfc5424)
      */
     protected function log(string|\Throwable $info, int $level): void
     {
