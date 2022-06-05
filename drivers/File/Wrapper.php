@@ -13,7 +13,7 @@ class Wrapper extends \Lucinda\Logging\AbstractLoggerWrapper
     /**
      * Detects Logger instance based on XML tag supplied
      *
-     * @param \SimpleXMLElement $xml XML tag that is child of loggers.(environment)
+     * @param  \SimpleXMLElement $xml XML tag that is child of loggers.(environment)
      * @return Logger
      * @throws ConfigurationException If resources referenced in XML do not exist or do not extend/implement required blueprint.
      */
