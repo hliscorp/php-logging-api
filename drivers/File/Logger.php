@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Logging\Driver\File;
 
 use Lucinda\Logging\LogFormatter;
@@ -8,34 +9,35 @@ use Lucinda\Logging\LogFormatter;
  */
 class Logger extends \Lucinda\Logging\Logger
 {
-    const EXTENSION = "log";
-    
+    public const EXTENSION = "log";
+
     private $filePath;
     private $rotationPattern;
     private $formatter;
-    
+
     /**
      * Creates logger instance.
      *
-     * @param string $filePath Log file (without extension) and its absolute path.
-     * @param string $rotationPattern PHP date function format by which logs will rotate.
-     * @param LogFormatter $formatter Class responsible in creating and formatting logging message.
+     * @param string       $filePath        Log file (without extension) and its absolute path.
+     * @param LogFormatter $formatter       Class responsible in creating and formatting logging message.
+     * @param string       $rotationPattern PHP date function format by which logs will rotate.
      */
-    public function __construct(string $filePath, string $rotationPattern="", LogFormatter $formatter)
+    public function __construct(string $filePath, LogFormatter $formatter, string $rotationPattern="")
     {
         $this->filePath = $filePath;
         $this->rotationPattern = $rotationPattern;
         $this->formatter = $formatter;
     }
-    
+
     /**
      * Performs the act of logging.
      *
-     * @param string|\Throwable $info Information that needs being logged
-     * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424)
+     * @param string|\Throwable $info  Information that needs being logged
+     * @param integer           $level Log level (see: https://tools.ietf.org/html/rfc5424)
      */
     protected function log($info, int $level): void
     {
-        error_log($this->formatter->format($info, $level)."\n", 3, $this->filePath.($this->rotationPattern?"__".date($this->rotationPattern):"").".".self::EXTENSION);
+        $fileName = $this->filePath.($this->rotationPattern ? "__".date($this->rotationPattern) : "").".".self::EXTENSION;
+        error_log($this->formatter->format($info, $level)."\n", 3, $fileName);
     }
 }

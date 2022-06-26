@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Logging;
 
 /**
@@ -14,22 +15,25 @@ namespace Lucinda\Logging;
 class LogFormatter
 {
     private $pattern;
-    
+    private $requestInformation;
+
     /**
      * Creates instance and saves message pattern.
      *
-     * @param string $pattern Log message pattern (eg: %d %u %f %l %m)
+     * @param string             $pattern            Log message pattern (eg: %d %u %f %l %m)
+     * @param RequestInformation $requestInformation
      */
-    public function __construct(string $pattern)
+    public function __construct(string $pattern, RequestInformation $requestInformation)
     {
         $this->pattern = $pattern;
+        $this->requestInformation = $requestInformation;
     }
-    
+
     /**
      * Builds log message based on global pattern and info to be logged.
      *
-     * @param string|\Throwable $info Information that needs being logged
-     * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424)
+     * @param  string|\Throwable $info  Information that needs being logged
+     * @param  integer           $level Log level (see: https://tools.ietf.org/html/rfc5424)
      * @return string Compiled log message ready to be saved.
      */
     public function format($info, int $level): string
@@ -53,14 +57,14 @@ class LogFormatter
                 }
             }
         }
-        if (!empty($_SERVER['REQUEST_URI'])) {
-            $message = str_replace("%u", $_SERVER['REQUEST_URI'], $message);
+        if ($requestURI = $this->requestInformation->getUri()) {
+            $message = str_replace("%u", $requestURI, $message);
         }
-        if (!empty($_SERVER['REMOTE_ADDR'])) {
-            $message = str_replace("%i", $_SERVER['REMOTE_ADDR'], $message);
+        if ($ipAddress = $this->requestInformation->getIpAddress()) {
+            $message = str_replace("%i", $ipAddress, $message);
         }
-        if (!empty($_SERVER['HTTP_USER_AGENT'])) {
-            $message = str_replace("%a", $_SERVER['HTTP_USER_AGENT'], $message);
+        if ($userAgent = $this->requestInformation->getUserAgent()) {
+            $message = str_replace("%a", $userAgent, $message);
         }
         return $message;
     }

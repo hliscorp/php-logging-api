@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Logging;
 
 /**
@@ -6,30 +7,35 @@ namespace Lucinda\Logging;
  */
 class Wrapper
 {
+    /**
+     * @var Logger[]
+     */
     private $loggers = array();
-    
+
     /**
      * Reads XML tag loggers.{environment}, finds and saves loggers found.
      *
-     * @param \SimpleXMLElement $xml XML containing logger settings.
-     * @param string $developmentEnvironment Development environment server is running into (eg: local, dev, live)
+     * @param  \SimpleXMLElement  $xml                    XML containing logger settings.
+     * @param  RequestInformation $requestInformation
+     * @param  string             $developmentEnvironment Development environment server is running into (eg: local, dev, live)
      * @throws ConfigurationException If pointed file doesn't exist or is invalid
      */
-    public function __construct(\SimpleXMLElement $xml, string $developmentEnvironment)
+    public function __construct(\SimpleXMLElement $xml, RequestInformation $requestInformation, string $developmentEnvironment)
     {
         if (empty($xml->loggers)) {
             return;
         }
-        $this->setLoggers($xml->loggers->{$developmentEnvironment});
+        $this->setLoggers($xml->loggers->{$developmentEnvironment}, $requestInformation);
     }
-    
+
     /**
      * Reads XML tag for loggers and saves them for later use.
      *
-     * @param \SimpleXMLElement $xml XML containing individual logger settings.
+     * @param  \SimpleXMLElement  $xml                XML containing individual logger settings.
+     * @param  RequestInformation $requestInformation
      * @throws ConfigurationException If pointed file doesn't exist or is invalid
      */
-    private function setLoggers(\SimpleXMLElement $xml): void
+    private function setLoggers(\SimpleXMLElement $xml, RequestInformation $requestInformation): void
     {
         $list = $xml->xpath("logger");
         foreach ($list as $xmlProperties) {
@@ -40,11 +46,11 @@ class Wrapper
             }
 
             // detects wrapper for loggers
-            $loggerWrapper = new $className($xmlProperties);
+            $loggerWrapper = new $className($xmlProperties, $requestInformation);
             $this->loggers[] = $loggerWrapper->getLogger();
         }
     }
-    
+
     /**
      * Gets detected logger.
      *

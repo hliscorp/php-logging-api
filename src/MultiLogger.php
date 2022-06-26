@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Logging;
 
 /**
@@ -6,8 +7,11 @@ namespace Lucinda\Logging;
  */
 class MultiLogger extends Logger
 {
+    /**
+     * @var Logger[]
+     */
     private $loggers;
-    
+
     /**
      * Creates an object.
      *
@@ -17,12 +21,12 @@ class MultiLogger extends Logger
     {
         $this->loggers = $loggers;
     }
-    
+
     /**
      * Performs the act of logging.
      *
-     * @param string|\Throwable $info Information that needs being logged
-     * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424)
+     * @param string|\Throwable $info  Information that needs being logged
+     * @param integer           $level Log level (see: https://tools.ietf.org/html/rfc5424)
      */
     protected function log($info, int $level): void
     {

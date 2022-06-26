@@ -1,19 +1,21 @@
 <?php
+
 namespace Test\Lucinda\Logging;
 
+use Lucinda\Logging\RequestInformation;
 use Lucinda\Logging\Wrapper;
 use Lucinda\UnitTest\Validator\Files;
 
 class WrapperTest
 {
-    public function __construct()
-    {
-        $_SERVER = ["REQUEST_URI"=>"test", "REMOTE_ADDR"=>"127.0.0.1", "HTTP_USER_AGENT"=>"Chrome"];
-    }
-
     public function getLogger()
     {
-        $wrapper = new Wrapper(simplexml_load_file("unit-tests.xml"), "local");
+        $requestInformation = new RequestInformation();
+        $requestInformation->setUserAgent("Chrome");
+        $requestInformation->setIpAddress("127.0.0.1");
+        $requestInformation->setUri("test");
+
+        $wrapper = new Wrapper(simplexml_load_file("unit-tests.xml"), $requestInformation, "local");
         $logger = $wrapper->getLogger();
         $result = [];
         $logger->emergency(new \Exception("error"));

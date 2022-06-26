@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Logging\Driver\File;
 
 use Lucinda\Logging\ConfigurationException;
@@ -12,7 +13,7 @@ class Wrapper extends \Lucinda\Logging\AbstractLoggerWrapper
     /**
      * Detects Logger instance based on XML tag supplied
      *
-     * @param \SimpleXMLElement $xml XML tag that is child of loggers.(environment)
+     * @param  \SimpleXMLElement $xml XML tag that is child of loggers.(environment)
      * @return Logger
      * @throws ConfigurationException If resources referenced in XML do not exist or do not extend/implement required blueprint.
      */
@@ -22,12 +23,12 @@ class Wrapper extends \Lucinda\Logging\AbstractLoggerWrapper
         if (!$filePath) {
             throw new ConfigurationException("Attribute 'path' is mandatory for file logger");
         }
-        
+
         $pattern= (string) $xml["format"];
         if (!$pattern) {
             throw new ConfigurationException("Attribute 'format' is mandatory for file logger");
         }
-        
-        return new Logger($filePath, (string) $xml["rotation"], new LogFormatter($pattern));
+
+        return new Logger($filePath, new LogFormatter($pattern, $this->requestInformation), (string) $xml["rotation"]);
     }
 }

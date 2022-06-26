@@ -1,4 +1,5 @@
 <?php
+
 namespace Lucinda\Logging;
 
 /**
@@ -15,7 +16,7 @@ abstract class Logger
     {
         $this->log($exception, LOG_EMERG);
     }
-    
+
     /**
      * Called when system encounters an error that caused current session to abort and requires immediate intervention.
      *
@@ -25,7 +26,7 @@ abstract class Logger
     {
         $this->log($exception, LOG_ALERT);
     }
-    
+
     /**
      * Called when system encounters an error that caused current session to abort.
      *
@@ -55,7 +56,7 @@ abstract class Logger
     {
         $this->log($message, LOG_WARNING);
     }
-    
+
     /**
      * Called when system encounters a situation of some concern.
      *
@@ -65,7 +66,7 @@ abstract class Logger
     {
         $this->log($message, LOG_NOTICE);
     }
-    
+
     /**
      * Called when programmer wants to log a debugging message to provider
      *
@@ -75,7 +76,7 @@ abstract class Logger
     {
         $this->log($message, LOG_DEBUG);
     }
-    
+
     /**
      * Called when user wants to log a message to provider
      *
@@ -85,12 +86,12 @@ abstract class Logger
     {
         $this->log($message, LOG_INFO);
     }
-    
+
     /**
      * Performs the act of logging.
      *
-     * @param string|\Throwable $info Information that needs being logged
-     * @param integer $level Log level (see: https://tools.ietf.org/html/rfc5424)
+     * @param string|\Throwable $info  Information that needs being logged
+     * @param integer           $level Log level (see: https://tools.ietf.org/html/rfc5424)
      */
     abstract protected function log($info, int $level): void;
 }
