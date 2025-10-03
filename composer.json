@@ -1,5 +1,5 @@
 {
-    "name": "lucinda/logging",
+    "name": "hlis/logging",
     "type": "library",
     "description": "High-performance API performing logging for PHP applications into files or SysLog",
     "keywords": ["logging","loggers","files","syslog"],
@@ -10,7 +10,7 @@
         "ext-SimpleXML": "*"
     },
     "require-dev": {
-    	"lucinda/unit-testing": "^1.0"
+    	"hlis/unit-testing": "^1.0"
     },
     "autoload": {
     	"psr-4": {
