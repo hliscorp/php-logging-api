@@ -1,5 +1,5 @@
 {
-    "name": "lucinda/logging",
+    "name": "hlis/logging",
     "type": "library",
     "description": "Light weight logging API built with performance and scalability in mind",
     "keywords": ["logging","loggers"],
