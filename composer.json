@@ -1,8 +1,13 @@
 {
-    "name": "hlis/logging",
+    "name": "lucinda/logging",
     "type": "library",
     "description": "High-performance API performing logging for PHP applications into files or SysLog",
-    "keywords": ["logging","loggers","files","syslog"],
+    "keywords": [
+        "logging",
+        "loggers",
+        "files",
+        "syslog"
+    ],
     "homepage": "https://github.com/aherne/php-logging-api",
     "license": "MIT",
     "require": {
@@ -10,21 +15,27 @@
         "ext-SimpleXML": "*"
     },
     "require-dev": {
-    	"hlis/unit-testing": "^2.0"
+        "lucinda/unit-testing": "^2.0"
     },
     "autoload": {
-    	"psr-4": {
-        	"Lucinda\\Logging\\Driver\\": "drivers/",
-        	"Lucinda\\Logging\\": "src/",
-        	"Test\\Lucinda\\Logging\\Driver\\": "tests_drivers/",
-        	"Test\\Lucinda\\Logging\\": "tests/"
-    	}
+        "psr-4": {
+            "Lucinda\\Logging\\Driver\\": "drivers/",
+            "Lucinda\\Logging\\": "src/",
+            "Test\\Lucinda\\Logging\\Driver\\": "tests_drivers/",
+            "Test\\Lucinda\\Logging\\": "tests/"
+        }
     },
     "authors": [
         {
             "name": "Lucian Popescu",
             "email": "lucian.gabriel.popescu@gmail.com",
             "role": "Developer"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/hliscorp/unit-testing"
         }
     ]
 }
