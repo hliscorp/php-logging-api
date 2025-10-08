@@ -1,8 +1,11 @@
 {
-    "name": "hlis/logging",
+    "name": "lucinda/logging",
     "type": "library",
     "description": "Light weight logging API built with performance and scalability in mind",
-    "keywords": ["logging","loggers"],
+    "keywords": [
+        "logging",
+        "loggers"
+    ],
     "homepage": "http://www.lucinda-framework.com/logging",
     "license": "MIT",
     "authors": [
